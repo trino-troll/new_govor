@@ -10,9 +10,9 @@ export default function Home() {
       
       <div className='grid grid-cols-2 gap-2 px-4'>
         <Link href={'/book/ghbdtn'}>
-          <div className='flex flex-col bg-green-600 rounded-xl overflow-auto'>
+          <div className='flex flex-col bg-[#1A202C] rounded-xl overflow-auto'>
             <Image src={img} alt='Изо'/>
-            <div className='text-center font-semibold'>Искажающие реальность</div>
+            <div className='text-center font-semibold text-white pb-1'>Искажающие реальность</div>
           </div>
         </Link>
       </div>

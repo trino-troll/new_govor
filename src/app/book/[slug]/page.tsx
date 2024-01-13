@@ -54,8 +54,8 @@ const BookPage = ({params: { slug }}: Props) => {
   return(
     <>
       <h2 className="text-center text-[24px] font-semibold">Искажающие реальность.</h2>
-      <div className=""> 
-        <div className="w-full p-4">
+      <div className="flex justify-center"> 
+        <div className="w-1/2 p-4">
           <Image src={image} alt="Изображение"/>
         </div>        
       </div>
@@ -70,7 +70,7 @@ const BookPage = ({params: { slug }}: Props) => {
         setCurrentSong={setCurrentSong}
       />
       <div className="px-4">
-        <button className="w-full py-2 rounded-xl bg-yellow-600 text-white font-bold"
+        <button className="w-full py-2 rounded-xl bg-[#1A202C] text-white font-bold"
         onClick={() => setShowDesc(!showDesc)}
       >{showDesc ? 'Скрыть описание' : 'Показать описание' }</button>
       </div>

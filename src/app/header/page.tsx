@@ -4,7 +4,7 @@ import Link from "next/link";
 const Header = () => {
 
   return (
-    <div className="flex justify-between items-center py-1 px-6 bg-green-600 mb-[20px]">
+    <div className="flex justify-between items-center py-1 px-6 bg-[#1A202C] mb-[20px]">
       <Link href={'/'}>
         <h1 className="font-semibold text-[30px] text-white">ChatterBox</h1>
       </Link>
