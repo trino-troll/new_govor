@@ -91,12 +91,7 @@ const Player = ({songs, setSongs, isplaying, setisplaing, audioElem, currentSong
     setIsEmptyProgress(false)
   }, [isEmptyProgress])
 
-  // useEffect(() => {
-  //   if (audioElem.current.currentTime === audioElem.current.currentTime) {
-  //     const index = songs.findIndex(x => x.title == currentSong.title)
-  //     setCurrentSong(songs[index + 1])
-  //   }
-  // }, [audioElem.cuttent?.currentTime])
+
   useEffect(() => {
     console.log(isScrolling)
   }, [isScrolling])

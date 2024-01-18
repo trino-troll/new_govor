@@ -31,6 +31,12 @@ const BookPage = ({params: { slug }}: Props) => {
   const audioElem = useRef<HTMLAudioElement | null>(null);
   const [showDesc, setShowDesc] = useState<boolean>(false)
 
+  // Инициализация времени из локалСтораж
+  const initialTime = typeof window !== "undefined" ? localStorage.getItem('audioTime') : null
+  const loadedTime = initialTime === null ? 0 : Number(initialTime)
+  const [time, setTime] = useState<number>(loadedTime || 0)
+  // Конец
+
   useEffect(() => {
     if (isplaying ) {
       audioElem.current?.play()
@@ -46,8 +52,30 @@ const BookPage = ({params: { slug }}: Props) => {
     if (duration && ct) {
       setCurrentSong({...currentSong, progress: ct * 100 / duration, length: duration})
     }
-    
+    handleTimeUpdate()
   }
+
+  const handleTimeUpdate = () => {
+    if(audioElem.current) {
+      setTime(audioElem.current.currentTime); // Обновление состояния текущим временем аудио
+    }
+  }
+
+  useEffect(() => {
+    const audioTime = localStorage.getItem('audioTime');
+    if (audioTime) {
+      setTime(Number(audioTime));
+    }
+  }, []);
+  useEffect(() => {
+    localStorage.setItem('audioTime', JSON.stringify(time) ); 
+  }, [time])
+
+  useEffect(() => {
+    if (time > 0 && audioElem.current) {
+      audioElem.current.currentTime = time
+    }
+  }, [])
 
   if (songs.length === 0) return (<div>Загрузка...</div>) 
 
@@ -59,7 +87,12 @@ const BookPage = ({params: { slug }}: Props) => {
           <Image src={image} alt="Изображение"/>
         </div>        
       </div>
-      <audio src={currentSong?.url} ref={audioElem} onTimeUpdate={osPlaying} autoPlay/>
+      <audio 
+        src={currentSong?.url} 
+        ref={audioElem} 
+        onTimeUpdate={osPlaying} 
+        autoPlay  
+      />
       <Player 
         songs={songs} 
         setSongs={setSongs} 
