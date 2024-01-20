@@ -9,16 +9,16 @@ const Panel = () => {
     <>
       <h2 className="text-2xl text-center font-semibold mb-4">Создать новый экземпляр</h2>
       <div className="flex flex-col justify-center px-8">
-        <Link href={'#'} className="mb-4">
+        <Link href={'/panel/author'} className="mb-4">
           <Button>Автора</Button>
         </Link>
-        <Link href={'#'} className="mb-4">
+        <Link href={'/panel/chtec'} className="mb-4">
           <Button >Чтеца</Button>
         </Link>
-        <Link href={'#'} className="mb-4">
+        <Link href={'/panel/chtec'} className="mb-4">
             <Button>Книгу</Button>
         </Link>
-        <Link href={'#'} >
+        <Link href={'/panel/audioFile'} >
             <Button>Аудиофайлы</Button>
         </Link>
       </div>

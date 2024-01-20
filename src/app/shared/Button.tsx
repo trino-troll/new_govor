@@ -2,17 +2,19 @@ import React from 'react';
 
 interface ButtonProps {
   children: any, 
-  onclick?: () => void,
+  onClick?: () => void,
   classProps?: string
+  type?: 'submit' | 'button'
 }
 
 const Button: React.FC<ButtonProps> = (
-    { children, onclick, classProps }
+    { children, onClick, classProps, type = 'button' }
   ) => {
   return (
     <button 
       className={`w-full py-2 rounded-xl bg-[#1A202C] text-white font-bold ${classProps}`}
-      onClick={onclick}  
+      onClick={onClick}
+      type={type} 
     >
       {children}
     </button>
