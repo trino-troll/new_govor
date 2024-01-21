@@ -2,15 +2,22 @@
 import Button from "@/app/shared/Button";
 import { useRouter } from 'next/navigation'
 import createAuthor from "./action/create-author";
+import { toast } from "react-toastify";
 
 
 const Author = () => {
   const router = useRouter()
 
   const newAuthor = async (data: FormData) => {
+    const author = await createAuthor(data)
 
-    const res = await createAuthor(data)
-    console.log(res)
+    if (typeof(author) === "string") {
+      console.log('Не удалось добавить автора')
+      toast.error('Не удалось добавить автора')
+    } else {
+      console.log(author)
+      toast.success(`Автор ${author.name} создан`)
+    }
   }
   return (
     <>
