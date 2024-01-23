@@ -35,3 +35,8 @@ model authors {
   id Int @id @default(autoincrement())
   name String @unique
 }
+
+model chtecs {
+  id Int @id @default(autoincrement())
+  name String @unique
+}
