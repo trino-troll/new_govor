@@ -28,15 +28,20 @@ model books {
   id Int @id @default(autoincrement())
   name String
   description String
-  image_url String
+  imageUrl String
+  chtecId Int
+  chtec chtecs @relation(fields: [chtecId], references: [id])
+  author authors[]
 }
 
 model authors {
   id Int @id @default(autoincrement())
   name String @unique
+  book books[]
 }
 
 model chtecs {
   id Int @id @default(autoincrement())
   name String @unique
+  book books[]
 }
