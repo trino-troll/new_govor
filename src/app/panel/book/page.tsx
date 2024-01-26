@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 
 import { useEffect, useState } from "react";
 import { getAuthors, getChtecs } from "./action/get-data";
+import CreateBook from "./action/create-book";
 
 interface AuthorData {
   id: number,
@@ -27,8 +28,18 @@ const Book = () => {
     setChtecs(resChtec)
   }
 
-  const newBook = (data: FormData) => {
-    console.log(data)
+  const newBook = async (data: FormData) => {
+    try {
+      const res = await CreateBook(data)
+      if (res) {
+        toast.success(`Книга ${res.name} создана`)
+      } else {
+        toast.error("Не удалось создать запись книги в БД")
+      }
+      router.refresh()
+    } catch(error) {
+      console.log(error)
+    }
   }
 
   useEffect(() => {
@@ -71,6 +82,9 @@ const Book = () => {
                 className="border focus:border-2 border-[#1A202C] outline-none px-2 py-1 rounded-lg"
               />
             </div>
+            <div className="flex flex-col px-4 mt-2">
+              <input type="file" name="file" />
+            </div>
 
             <div className="flex flex-col px-4 mt-2">
               <label htmlFor="author">Выбери автора</label>
@@ -94,8 +108,6 @@ const Book = () => {
               </select>
             </div>
 
-
-            
             <div className="mt-6">
               <Button type="submit">Создать</Button>
             </div>

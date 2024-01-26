@@ -27,11 +27,13 @@ model roles {
 model books {
   id Int @id @default(autoincrement())
   name String
+  slug String?
   description String
   imageUrl String
   chtecId Int
   chtec chtecs @relation(fields: [chtecId], references: [id])
-  author authors[]
+  authorID Int
+  author authors @relation(fields: [authorID], references: [id])
 }
 
 model authors {
