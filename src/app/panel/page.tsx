@@ -18,8 +18,11 @@ const Panel = () => {
         <Link href={'/panel/book'} className="mb-4">
             <Button>Книгу</Button>
         </Link>
-        <Link href={'/panel/audioFile'} >
+        <Link href={'/panel/audioFile'} className="mb-4">
             <Button>Аудиофайлы</Button>
+        </Link>
+        <Link href={'/panel/series'} >
+            <Button>Серии</Button>
         </Link>
       </div>
     </>

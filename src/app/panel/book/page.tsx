@@ -49,7 +49,7 @@ const Book = () => {
   return (
     <>
       <div className="text-2xl text-center font-semibold">
-        Страница книги
+        Страница создания книги
       </div>
 
       <div className="px-4 mt-6">

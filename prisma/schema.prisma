@@ -34,6 +34,8 @@ model books {
   chtec chtecs @relation(fields: [chtecId], references: [id])
   authorID Int
   author authors @relation(fields: [authorID], references: [id])
+  seriesId Int?
+  series series? @relation(fields: [seriesId], references: [id])
 }
 
 model authors {
@@ -43,6 +45,12 @@ model authors {
 }
 
 model chtecs {
+  id Int @id @default(autoincrement())
+  name String @unique
+  book books[]
+}
+
+model series {
   id Int @id @default(autoincrement())
   name String @unique
   book books[]

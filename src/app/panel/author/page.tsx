@@ -23,7 +23,7 @@ const Author = () => {
     <>
 
       <div className="text-2xl text-center font-semibold">
-        Страница автора
+        Страница создания автора
       </div>
 
       <div className="px-4 mt-6">

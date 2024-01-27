@@ -1,38 +1,38 @@
 'use client'
 import Button from "@/app/shared/Button";
 import { useRouter } from 'next/navigation'
-import createChtec from "./action/create-chtec";
 import { toast } from "react-toastify";
+import createSeries from "./action/create-series";
 
 
-const Chtec = () => {
+const Series = () => {
   const router = useRouter()
 
-  const newChtec = async (data: FormData) => {
-    const chtec = await createChtec(data)
+  const newSeries = async (data: FormData) => {
+    const series = await createSeries(data)
 
-    if (typeof(chtec) === "string") {
-      console.log('Не удалось добавить чтеца')
-      toast.error('Не удалось добавить чтеца')
+    if (typeof(series) === "string") {
+      console.log('Не удалось добавить серию')
+      toast.error('Не удалось добавить серию')
     } else {
-      console.log(chtec)
-      toast.success(`Чтец ${chtec.name} создан`)
+      console.log(series)
+      toast.success(`Серия ${series.name} создана`)
     }
   }
   return (
     <>
 
       <div className="text-2xl text-center font-semibold">
-        Страница создания чтеца
+        Страница создания серии
       </div>
 
       <div className="px-4 mt-6">
         <form
-          action={newChtec}
+          action={newSeries}
           className="border-2 border-[#1A202C] p-2 rounded-xl "
         >
           <div className="flex flex-col px-4">
-            <label htmlFor="name">Имя чтеца</label>
+            <label htmlFor="name">Название серии</label>
             <input 
               type="text" 
               name="name" 
@@ -52,4 +52,4 @@ const Chtec = () => {
   )
 }
 
-export default Chtec;
+export default Series;
