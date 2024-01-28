@@ -28,7 +28,7 @@ model books {
   id Int @id @default(autoincrement())
   name String
   slug String?
-  description String
+  description String @db.Text
   imageUrl String
   chtecId Int
   chtec chtecs @relation(fields: [chtecId], references: [id])

@@ -15,3 +15,8 @@ export async function getSeries() {
   const res = await prisma.series.findMany()
   return res
 }
+
+export async function getGenres() {
+  const res = await prisma.genres.findMany()
+  return res
+}

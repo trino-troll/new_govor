@@ -12,7 +12,8 @@ const CreateBookScheme = z.object({
   imageUrl: z.string(),
   authorID: z.number(),
   chtecId: z.number(),
-  seriesId: z.number(),
+  seriesId: z.number().nullable(),
+  genreId: z.number().nullable(),
 })
 
 export default async function CreateBook(data: any) {
@@ -24,23 +25,27 @@ export default async function CreateBook(data: any) {
     // сохраниние картинки
     const file: File | null = data.get('file') as unknown as File 
 
+    let path = '/public/deafault-book.svg'
+
     if (!file) {
       throw new Error('Нет изображения')
+    } else if (file.name && file.size > 0){
+      const bytes = await file.arrayBuffer()
+      const buffer = Buffer.from(bytes)
+  
+      const pathToDir = join('public', 'audiobooks', `${slug}`);
+      await mkdir(pathToDir, {recursive: true});
+  
+      path = join('public', 'audiobooks', `${slug}`, file.name)
+      await writeFile(path, buffer)
+      console.log(`фаил по адресу ${path} загружен`)
     }
-    const bytes = await file.arrayBuffer()
-    const buffer = Buffer.from(bytes)
-
-    const pathToDir = join('public', 'audiobooks', `${slug}`);
-    await mkdir(pathToDir, {recursive: true});
-
-    const path = join('public', 'audiobooks', `${slug}`, file.name)
-    await writeFile(path, buffer)
-    console.log(`фаил по адресу ${path} загружен`)
     // сохраниние картинки
   
     const authorStr = data.get('author')
     const chtecStr = data.get('chtec')
-    const seriesStr = data.get('series')
+    const seriesStr = +data.get('series')
+    const genreStr = +data.get('genre')
 
     if (authorStr && chtecStr) {
       const dataBook = {
@@ -50,7 +55,8 @@ export default async function CreateBook(data: any) {
         imageUrl: path,
         authorID: +authorStr,
         chtecId: +chtecStr,
-        seriesId: +seriesStr,
+        seriesId: seriesStr !== 0 ? seriesStr : null ,
+        genreId: genreStr !== 0 ? genreStr : null,
       }
 
       const validBook = CreateBookScheme.parse(dataBook)

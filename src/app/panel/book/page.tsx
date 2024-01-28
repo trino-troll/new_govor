@@ -2,9 +2,8 @@
 import Button from "@/app/shared/Button";
 import { useRouter } from 'next/navigation'
 import { toast } from "react-toastify";
-
-import { useEffect, useState } from "react";
-import { getAuthors, getChtecs, getSeries } from "./action/get-data";
+import { useEffect, useRef, useState } from "react";
+import { getAuthors, getChtecs, getGenres, getSeries } from "./action/get-data";
 import CreateBook from "./action/create-book";
 
 interface AuthorData {
@@ -19,25 +18,34 @@ interface SeriesData{
   id: number,
   name: string,
 }
+interface GenreData{
+  id: number,
+  name: string,
+}
 
 const Book = () => {
   const router = useRouter()
   const [authors, setAuthors] = useState<AuthorData[]>([])
   const [chtecs, setChtecs ] = useState<ChtecData[]>([])
   const [series, setSeries] = useState<SeriesData[]>([])
+  const [genres, setGenres] = useState<GenreData[]>([])
+  const addImage = useRef<HTMLInputElement | null>(null)
 
   const listAuthors = async () => {
     const resAuthor = await getAuthors()
     const resChtec = await getChtecs()
     const resSeries = await getSeries()
+    const resGenres = await getGenres()
     setAuthors(resAuthor)
     setChtecs(resChtec)
     setSeries(resSeries)
+    setGenres(resGenres)
   }
 
   const newBook = async (data: FormData) => {
     try {
       const res = await CreateBook(data)
+      console.log(data.get('file'))
       if (res) {
         toast.success(`Книга ${res.name} создана`)
       } else {
@@ -48,6 +56,12 @@ const Book = () => {
       console.log(error)
     }
   }
+
+  const handleAddImage = () => {
+    if (addImage.current) {
+      addImage.current.click()
+    }
+  } 
 
   useEffect(() => {
     listAuthors()
@@ -81,8 +95,17 @@ const Book = () => {
               ></textarea>
             </div>
 
-            <div className="flex flex-col px-4 mt-2">
-              <input type="file" name="file" />
+            <div className="hidden">
+              <input 
+                type="file" 
+                name="file" 
+                ref={addImage}
+                accept="image/*"
+              />
+            </div>
+
+            <div className="px-4 mt-3">
+              <Button onClick={handleAddImage}>Добавить изображение</Button>
             </div>
 
             <div className="flex flex-col px-4 mt-2">
@@ -114,6 +137,18 @@ const Book = () => {
               >
                 <option value=""></option>
                 {series.map((chtec: ChtecData) => (
+                  <option key={chtec.id} value={chtec.id}>{chtec.name}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className="flex flex-col px-4 mt-2">
+              <label htmlFor="genre">Выбери жанр</label>
+              <select name="genre" id=""
+                className="border focus:border-2 border-[#1A202C] outline-none px-2 py-1 rounded-lg"
+              >
+                <option value=""></option>
+                {genres.map((chtec: ChtecData) => (
                   <option key={chtec.id} value={chtec.id}>{chtec.name}</option>
                 ))}
               </select>
