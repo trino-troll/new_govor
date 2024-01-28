@@ -36,6 +36,8 @@ model books {
   author authors @relation(fields: [authorID], references: [id])
   seriesId Int?
   series series? @relation(fields: [seriesId], references: [id])
+  genreId Int?
+  genres genres? @relation(fields: [genreId], references: [id])
 }
 
 model authors {
@@ -51,6 +53,12 @@ model chtecs {
 }
 
 model series {
+  id Int @id @default(autoincrement())
+  name String @unique
+  book books[]
+}
+
+model genres {
   id Int @id @default(autoincrement())
   name String @unique
   book books[]

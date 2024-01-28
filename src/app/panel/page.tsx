@@ -16,13 +16,16 @@ const Panel = () => {
           <Button >Чтеца</Button>
         </Link>
         <Link href={'/panel/book'} className="mb-4">
-            <Button>Книгу</Button>
+            <Button>Книги</Button>
         </Link>
         <Link href={'/panel/audioFile'} className="mb-4">
-            <Button>Аудиофайлы</Button>
+            <Button>Аудиофайла</Button>
         </Link>
-        <Link href={'/panel/series'} >
+        <Link href={'/panel/series'} className="mb-4" >
             <Button>Серии</Button>
+        </Link>
+        <Link href={'/panel/genres'} >
+            <Button>Жанров</Button>
         </Link>
       </div>
     </>
