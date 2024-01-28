@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import { toast } from "react-toastify";
 
 import { useEffect, useState } from "react";
-import { getAuthors, getChtecs } from "./action/get-data";
+import { getAuthors, getChtecs, getSeries } from "./action/get-data";
 import CreateBook from "./action/create-book";
 
 interface AuthorData {
@@ -15,17 +15,24 @@ interface ChtecData {
   id: number,
   name: string,
 }
+interface SeriesData{
+  id: number,
+  name: string,
+}
 
 const Book = () => {
   const router = useRouter()
   const [authors, setAuthors] = useState<AuthorData[]>([])
   const [chtecs, setChtecs ] = useState<ChtecData[]>([])
+  const [series, setSeries] = useState<SeriesData[]>([])
 
   const listAuthors = async () => {
     const resAuthor = await getAuthors()
     const resChtec = await getChtecs()
+    const resSeries = await getSeries()
     setAuthors(resAuthor)
     setChtecs(resChtec)
+    setSeries(resSeries)
   }
 
   const newBook = async (data: FormData) => {
@@ -75,14 +82,6 @@ const Book = () => {
             </div>
 
             <div className="flex flex-col px-4 mt-2">
-              <label htmlFor="imageUrl">Путь до изображения</label>
-              <input 
-                type="text" 
-                name="imageUrl" 
-                className="border focus:border-2 border-[#1A202C] outline-none px-2 py-1 rounded-lg"
-              />
-            </div>
-            <div className="flex flex-col px-4 mt-2">
               <input type="file" name="file" />
             </div>
 
@@ -103,6 +102,18 @@ const Book = () => {
                 className="border focus:border-2 border-[#1A202C] outline-none px-2 py-1 rounded-lg"
               >
                 {chtecs.map((chtec: ChtecData) => (
+                  <option key={chtec.id} value={chtec.id}>{chtec.name}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className="flex flex-col px-4 mt-2">
+              <label htmlFor="series">Выбери серию</label>
+              <select name="series" id=""
+                className="border focus:border-2 border-[#1A202C] outline-none px-2 py-1 rounded-lg"
+              >
+                <option value=""></option>
+                {series.map((chtec: ChtecData) => (
                   <option key={chtec.id} value={chtec.id}>{chtec.name}</option>
                 ))}
               </select>

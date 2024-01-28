@@ -10,3 +10,8 @@ export async function getChtecs() {
   const res = await prisma.chtecs.findMany()
   return res
 }
+
+export async function getSeries() {
+  const res = await prisma.series.findMany()
+  return res
+}
