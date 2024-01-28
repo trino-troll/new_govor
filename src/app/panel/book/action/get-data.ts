@@ -20,3 +20,8 @@ export async function getGenres() {
   const res = await prisma.genres.findMany()
   return res
 }
+
+export async function getBooks() {
+  const res = await prisma.books.findMany()
+  return res
+}
