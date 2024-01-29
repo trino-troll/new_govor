@@ -1,10 +1,10 @@
 'use client'
 import Button from "@/app/shared/Button";
 import { useRouter } from 'next/navigation'
-// import createAuthor from "./action/create-author";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { getBooks } from "../book/action/get-data";
+import createAudioFiles from "./action/create-audio-files";
 
 interface BookData {
   id: number;
@@ -23,8 +23,7 @@ const AudioFile = () => {
   const router = useRouter()
 
   const newAudioFile = async (data: FormData) => {
-    console.log(data.get('audioFiles'))
-    // const audioFile = await createAudioFile(data)
+    const audioFile = await createAudioFiles(data)
 
     // if (typeof(audioFile) === "string") {
     //   console.log('Не удалось добавить автора')
@@ -72,6 +71,7 @@ const AudioFile = () => {
               type="file" 
               name="audioFiles" 
               accept="audio/*"
+              multiple
             />
           </div>
 

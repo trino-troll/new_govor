@@ -38,6 +38,7 @@ model books {
   series series? @relation(fields: [seriesId], references: [id])
   genreId Int?
   genres genres? @relation(fields: [genreId], references: [id])
+  audioFiles audioFiles[]
 }
 
 model authors {
@@ -62,4 +63,11 @@ model genres {
   id Int @id @default(autoincrement())
   name String @unique
   book books[]
+}
+
+model audioFiles {
+  id Int @id @default(autoincrement())
+  name String
+  bookId Int
+  book books @relation(fields: [bookId], references: [id])
 }
