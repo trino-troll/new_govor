@@ -2,7 +2,7 @@
 import Button from "@/app/shared/Button";
 import { useRouter } from 'next/navigation'
 import { toast } from "react-toastify";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getBooks } from "../book/action/get-data";
 import createAudioFiles from "./action/create-audio-files";
 
@@ -20,23 +20,39 @@ interface BookData {
 
 const AudioFile = () => {
   const [books, setBooks] = useState<BookData[]>([])
+  const addAudioFiles = useRef<HTMLInputElement | null>(null)
+  const [counterFiles, setCounterFiles] = useState<number>(0)
   const router = useRouter()
 
   const newAudioFile = async (data: FormData) => {
     const audioFile = await createAudioFiles(data)
 
-    // if (typeof(audioFile) === "string") {
-    //   console.log('Не удалось добавить автора')
-    //   toast.error('Не удалось добавить автора')
-    // } else {
-    //   console.log(audioFile)
-    //   toast.success(`Автор ${audioFile.name} создан`)
-    // }
+    if (audioFile && audioFile.includes('Успех')) {
+      toast.success(audioFile, {autoClose: 3000})
+    } else if (audioFile && audioFile.includes('Ошибка')) {
+      toast.error(audioFile, {autoClose: 5000})
+    } else {
+      toast.warning('Что-то пошло не так. Посмотри логи.', {autoClose: 3000})
+    }
+    router.refresh()
   }
 
   const handleBooks = async () => {
     const resBooks = await getBooks()
     setBooks(resBooks)
+  }
+
+  const handleAddAudioFiles = () => {
+    if (addAudioFiles.current) {
+      addAudioFiles.current.click()
+    }
+  }
+
+  const handleCounterFiles = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files
+    if (files) {
+      setCounterFiles(files.length)
+    }
   }
 
   useEffect(() => {
@@ -66,12 +82,18 @@ const AudioFile = () => {
             </select>
           </div>
 
-          <div className="mt-4">
+          <div className="px-4 mt-3">
+              <Button onClick={handleAddAudioFiles}>Добавить аудиофаил(ы)({counterFiles})</Button>
+          </div>
+
+          <div className="hidden">
             <input 
               type="file" 
               name="audioFiles" 
               accept="audio/*"
               multiple
+              ref={addAudioFiles}
+              onChange={handleCounterFiles}
             />
           </div>
 
