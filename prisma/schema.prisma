@@ -71,3 +71,10 @@ model audioFiles {
   bookId Int
   book books @relation(fields: [bookId], references: [id])
 }
+
+model banners {
+  id Int @id @default(autoincrement())
+  name String
+  count Int?
+  date_click DateTime?
+}

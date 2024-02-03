@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import CrossClosa from '../../../public/cross_close.svg'
 import Image from 'next/image';
 import { useMainBanner } from '../store';
+import countClick from './banner/action/count-click';
 
 type Props = {
   time: number
@@ -10,7 +11,7 @@ type Props = {
 
 const Timer = ({ time }: Props) => {
   const [seconds, setSeconds] = useState(time);
-  const { setShowBanner } = useMainBanner()
+  const { setShowBanner, setIsDisabledMainBtn } = useMainBanner()
 
   useEffect(() => {
     if (seconds > 0) {
@@ -18,9 +19,18 @@ const Timer = ({ time }: Props) => {
         setSeconds((prevSeconds) => prevSeconds - 1);
       }, 1000);
 
+      
       return () => clearInterval(timer);
     }
+    if (seconds === 0) {
+      setIsDisabledMainBtn(false)
+    }
   }, [seconds]);
+
+  const handleCounterMain = () => {
+    setShowBanner(false)
+    countClick('main')
+  }
 
   return (
     <div className='flex justify-between items-center w-full px-4 font-semibold'>
@@ -33,7 +43,7 @@ const Timer = ({ time }: Props) => {
         ) : (
           <div 
             className='flex justify-center items-center w-[40px] h-[40px] bg-white rounded-full cursor-pointer'
-            onClick={() => setShowBanner(false)}
+            onClick={handleCounterMain}
           >
             <Image src={CrossClosa} alt='Закрыть рекламный баннер'/>
           </div>
