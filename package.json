@@ -17,7 +17,8 @@
     "react-icons": "^4.12.0",
     "react-toastify": "^10.0.4",
     "sharp": "^0.33.2",
-    "transliteration": "^2.3.5"
+    "transliteration": "^2.3.5",
+    "zustand": "^4.5.0"
   },
   "devDependencies": {
     "@types/node": "^20",
