@@ -8,7 +8,7 @@ import prew15 from '../../../public/prew15.svg'
 import back15 from '../../../public/back15.svg'
 import list from '../../../public/list.svg'
 import { Dispatch, LegacyRef, MutableRefObject, SetStateAction, useEffect, useRef, useState } from 'react'
-import { Song, CurrentSong } from '../book/[slug]/page'
+import { Song, CurrentSong } from '../books/[slug]/page'
 
 type Props = {
   songs: Song[],

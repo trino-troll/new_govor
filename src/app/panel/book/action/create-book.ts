@@ -20,7 +20,7 @@ export default async function CreateBook(data: any) {
   try {
     const rusName = data.get('name')
     const latName = transliterate(rusName)
-    const slug = latName.split(' ').join('-')
+    const slug = latName.replace('.','').replace(',', '').split(' ').join('-')
 
     // сохраниние картинки
     const file: File | null = data.get('file') as unknown as File 
@@ -52,7 +52,7 @@ export default async function CreateBook(data: any) {
         name: data.get('name'),
         slug: slug,
         description: data.get('description'),
-        imageUrl: path,
+        imageUrl: path.replace('public', ''),
         authorID: +authorStr,
         chtecId: +chtecStr,
         seriesId: seriesStr !== 0 ? seriesStr : null ,

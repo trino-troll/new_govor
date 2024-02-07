@@ -15,7 +15,7 @@ const Banner = () => {
       const currentDate = new Date();
       const currentMinutes = currentDate.getMinutes();
 
-      if (currentMinutes % 2 === 0) { // изменить на 15 или 10 , сейчас каждые 2 минуты
+      if (currentMinutes % 15 === 0) { 
         setShowBanner(true);
       }
 
