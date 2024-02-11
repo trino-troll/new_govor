@@ -8,6 +8,7 @@ import AudioFile from "../page";
 const createAudioFilesScheme = z.object({
   name: z.string().min(2),
   bookId: z.number(),
+  audioUrl: z.string()
 })
 
 export default async function createAudioFiles (data: any) {
@@ -37,7 +38,8 @@ export default async function createAudioFiles (data: any) {
           try {
             const audioFileData = {
               name: file.name.replace(' ', ''),
-              bookId: +idBook
+              bookId: +idBook,
+              audioUrl: path.replace('public', ''),
             } 
             const validAudioFile = createAudioFilesScheme.parse(audioFileData)
             const newAudioFile = await prisma.audioFiles.create({

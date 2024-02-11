@@ -8,11 +8,11 @@ import prew15 from '../../../public/prew15.svg'
 import back15 from '../../../public/back15.svg'
 import list from '../../../public/list.svg'
 import { Dispatch, LegacyRef, MutableRefObject, SetStateAction, useEffect, useRef, useState } from 'react'
-import { Song, CurrentSong } from '../books/[slug]/page'
+import { Song, CurrentSong, AudioFiles } from '../books/[slug]/page'
 
 type Props = {
-  songs: Song[],
-  setSongs: Dispatch<SetStateAction<Song[]>>,
+  songs: AudioFiles[],
+  setSongs: Dispatch<SetStateAction<AudioFiles[]>>,
   isplaying: boolean,
   setisplaing: (isplaying: boolean) => void,
   audioElem: any,
@@ -40,29 +40,29 @@ const Player = ({songs, setSongs, isplaying, setisplaing, audioElem, currentSong
     }
   }
 
-  const skipBack = () => {
-    const index = songs.findIndex(x => x.title == currentSong.title)
-    if (index == 0) {
-      setCurrentSong(songs[songs.length - 1])
-    } else {
-      setCurrentSong(songs[index - 1])
-    }
-    audioElem.current.currentTime = 0;
-    setIsEmptyProgress(true)
-    PlayPause(true)
-  }
+  // const skipBack = () => {
+  //   const index = songs.findIndex(x => x.name == currentSong.audio.name)
+  //   if (index == 0) {
+  //     setCurrentSong(songs[songs.length - 1])
+  //   } else {
+  //     setCurrentSong(songs[index - 1])
+  //   }
+  //   audioElem.current.currentTime = 0;
+  //   setIsEmptyProgress(true)
+  //   PlayPause(true)
+  // }
 
-  const skipToNext = () => {
-    const index = songs.findIndex(x => x.title == currentSong.title)
-    if (index == songs.length - 1) {
-      setCurrentSong(songs[0])
-    } else {
-      setCurrentSong(songs[index + 1])
-    }
-    audioElem.current.currentTime = 0;
-    setIsEmptyProgress(true)
-    PlayPause(true)
-  }
+  // const skipToNext = () => {
+  //   const index = songs.findIndex(x => x.name == currentSong.audio.name)
+  //   if (index == songs.length - 1) {
+  //     setCurrentSong(songs[0])
+  //   } else {
+  //     setCurrentSong(songs[index + 1])
+  //   }
+  //   audioElem.current.currentTime = 0;
+  //   setIsEmptyProgress(true)
+  //   PlayPause(true)
+  // }
 
   const normalTime = (time: number) => {
     let seconds: number | string = time % 60
@@ -100,11 +100,11 @@ const Player = ({songs, setSongs, isplaying, setisplaing, audioElem, currentSong
     <div className='bg-yellow-600 m-4 border-2 border-black rounded-3xl relative'>
       <Image src={list} alt='Список глав' className='absolute top-0 right-2 w-10 h-10 cursor-pointer' title='Список глав' onClick={() => setIsShowList(!isShowList)}/>
       <div className='text-center font-semibold'>
-        <p>{currentSong.title}</p>
+        <p>{currentSong.name}</p>
       </div>
       <div className='flex justify-between pl-4 pr-14 text-white font-semibold '>
         {audioElem.current ? (<p>{normalTime(Math.round(audioElem.current.currentTime)) }</p>) : (<p>00:00</p>)}
-        <p>{currentSong.time}</p>
+        {/* <p>{currentSong.time}</p> */}
       </div>
       <div className='px-4 mb-2'>
         <div className='w-full border border-black rounded-md cursor-pointer' 
@@ -116,7 +116,9 @@ const Player = ({songs, setSongs, isplaying, setisplaing, audioElem, currentSong
       </div>
 
       <div className='flex justify-between mx-2 pl-2 mb-1'>
-        <Image src={arrowLeft} alt='Назад' onClick={skipBack} className='cursor-pointer'/>
+        <Image src={arrowLeft} alt='Назад'
+          // onClick={skipBack}
+          className='cursor-pointer'/>
         <Image src={back15} alt='Перемотка на -15 секунд' onClick={rewind} className='cursor-pointer'/>
         {isplaying ? (
             <Image src={pause} alt='Пауза' className="cursor-pointer" onClick={() => PlayPause(false)}/>
@@ -125,7 +127,9 @@ const Player = ({songs, setSongs, isplaying, setisplaing, audioElem, currentSong
           )
         }
         <Image src={prew15} alt='Перемотка на +15 секунд' onClick={rewind_prew} className='cursor-pointer'/>
-        <Image src={arrowRight} alt='Вперёд' onClick={skipToNext} className='cursor-pointer'/>
+        <Image src={arrowRight} alt='Вперёд' 
+          // onClick={skipToNext}
+          className='cursor-pointer'/>
       </div>
 
       {isShowList && 
@@ -134,8 +138,7 @@ const Player = ({songs, setSongs, isplaying, setisplaing, audioElem, currentSong
         >
           {songs.map((song, i:number) => (
             <div className='flex justify-between cursor-pointer py-2 font-semibold' key={i}>
-              <p>{song.title}</p>
-              <p>{song.time}</p>
+              <p>{song.name}</p>
             </div>
           ))}
         </div>

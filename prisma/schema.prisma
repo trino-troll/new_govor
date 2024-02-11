@@ -27,7 +27,7 @@ model roles {
 model books {
   id Int @id @default(autoincrement())
   name String
-  slug String?
+  slug String
   description String @db.Text
   imageUrl String
   chtecId Int
@@ -70,6 +70,7 @@ model audioFiles {
   name String
   bookId Int
   book books @relation(fields: [bookId], references: [id])
+  audioUrl String
 }
 
 model banners {
