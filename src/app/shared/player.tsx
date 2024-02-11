@@ -96,6 +96,10 @@ const Player = ({songs, setSongs, isplaying, setisplaing, audioElem, currentSong
     console.log(isScrolling)
   }, [isScrolling])
 
+  useEffect(() => {
+    localStorage.setItem('audioName', currentSong.name)
+  }, [currentSong])
+
   return (
     <div className='bg-yellow-600 m-4 border-2 border-black rounded-3xl relative'>
       <Image src={list} alt='Список глав' className='absolute top-0 right-2 w-10 h-10 cursor-pointer' title='Список глав' onClick={() => setIsShowList(!isShowList)}/>

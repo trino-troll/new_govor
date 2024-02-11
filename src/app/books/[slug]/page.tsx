@@ -47,6 +47,14 @@ export interface AudioFiles {
 }
 
 const BookPage = ({params: { slug }}: Props) => {
+  // Инициализация времени из локалСтораж
+  const initialTime = typeof window !== "undefined" ? localStorage.getItem('audioTime') : null
+  const loadedTime = initialTime === null ? 0 : Number(initialTime)
+  const [time, setTime] = useState<number>(loadedTime)
+  const initialName = typeof window !== 'undefined' ? localStorage.getItem('audioName') : null
+  const loadedName = initialName === null ? null : initialName
+  // Конец
+
   const [songs, setSongs] = useState<AudioFiles[]>([]);
   const [isplaying, setisplaing] = useState(false);
   const [currentSong, setCurrentSong] = useState<CurrentSong>();
@@ -54,6 +62,8 @@ const BookPage = ({params: { slug }}: Props) => {
   const [showDesc, setShowDesc] = useState<boolean>(false)
   const [book, setBook] = useState<Book | null>(null)
 
+
+  //Получение книги
   const getBook = async () => {
     try {
       const fetchBook = await getOneBook(slug)
@@ -66,7 +76,7 @@ const BookPage = ({params: { slug }}: Props) => {
       console.log(error)
     }
   }
-
+  //Получение аудио для книги
   const getAudioForBookOnClient = async (id: number, name: string) => {
     try {
       const res = await getAudioForBook(id)
@@ -78,11 +88,11 @@ const BookPage = ({params: { slug }}: Props) => {
       console.log(`Не удалось получи аудиок к книге ${name}`)
     }
   }
-
+  //Получение книги
   useEffect(() => {
     getBook()
   }, [])
-
+  //Получение аудио
   useEffect(() => {
     if (book) {
       getAudioForBookOnClient(book.id, book.name)
@@ -90,17 +100,16 @@ const BookPage = ({params: { slug }}: Props) => {
   }, [book])
   useEffect(() => {
     if (songs.length > 0) {
-      setCurrentSong({...songs[0], progress: 0})
+      if (initialName) {
+        const findSong = songs.filter((song) => song.name === initialName)
+        setCurrentSong({...findSong[0], progress: 0})
+      } else {
+        setCurrentSong({...songs[0], progress: 0})
+      }
     }
   }, [songs])
-  
 
-  // Инициализация времени из локалСтораж
-  const initialTime = typeof window !== "undefined" ? localStorage.getItem('audioTime') : null
-  const loadedTime = initialTime === null ? 0 : Number(initialTime)
-  const [time, setTime] = useState<number>(loadedTime || 0)
-  // Конец
-
+  //плаер
   useEffect(() => {
     if (isplaying ) {
       audioElem.current?.play()
@@ -126,12 +135,6 @@ const BookPage = ({params: { slug }}: Props) => {
   }
 
   useEffect(() => {
-    const audioTime = localStorage.getItem('audioTime');
-    if (audioTime) {
-      setTime(Number(audioTime));
-    }
-  }, []);
-  useEffect(() => {
     localStorage.setItem('audioTime', JSON.stringify(time) ); 
   }, [time])
 
@@ -139,7 +142,7 @@ const BookPage = ({params: { slug }}: Props) => {
     if (time > 0 && audioElem.current) {
       audioElem.current.currentTime = time
     }
-  }, [])
+  }, [songs])
 
   if (!book) return (<div>Загрузка</div>) 
 
