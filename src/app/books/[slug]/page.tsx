@@ -71,7 +71,8 @@ const BookPage = ({params: { slug }}: Props) => {
     try {
       const res = await getAudioForBook(id)
       if (Array.isArray(res)) {
-        setSongs(res)
+        const sortedRes = [...res].sort((a, b) => a.name.localeCompare(b.name));
+        setSongs(sortedRes);
       }
     } catch(error) {
       console.log(`Не удалось получи аудиок к книге ${name}`)

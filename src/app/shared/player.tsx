@@ -40,29 +40,29 @@ const Player = ({songs, setSongs, isplaying, setisplaing, audioElem, currentSong
     }
   }
 
-  // const skipBack = () => {
-  //   const index = songs.findIndex(x => x.name == currentSong.audio.name)
-  //   if (index == 0) {
-  //     setCurrentSong(songs[songs.length - 1])
-  //   } else {
-  //     setCurrentSong(songs[index - 1])
-  //   }
-  //   audioElem.current.currentTime = 0;
-  //   setIsEmptyProgress(true)
-  //   PlayPause(true)
-  // }
+  const skipBack = () => {
+    const index = songs.findIndex(x => x.name == currentSong.name)
+    if (index == 0) {
+      setCurrentSong(songs[songs.length - 1])
+    } else {
+      setCurrentSong(songs[index - 1])
+    }
+    audioElem.current.currentTime = 0;
+    setIsEmptyProgress(true)
+    PlayPause(true)
+  }
 
-  // const skipToNext = () => {
-  //   const index = songs.findIndex(x => x.name == currentSong.audio.name)
-  //   if (index == songs.length - 1) {
-  //     setCurrentSong(songs[0])
-  //   } else {
-  //     setCurrentSong(songs[index + 1])
-  //   }
-  //   audioElem.current.currentTime = 0;
-  //   setIsEmptyProgress(true)
-  //   PlayPause(true)
-  // }
+  const skipToNext = () => {
+    const index = songs.findIndex(x => x.name == currentSong.name)
+    if (index == songs.length - 1) {
+      setCurrentSong(songs[0])
+    } else {
+      setCurrentSong(songs[index + 1])
+    }
+    audioElem.current.currentTime = 0;
+    setIsEmptyProgress(true)
+    PlayPause(true)
+  }
 
   const normalTime = (time: number) => {
     let seconds: number | string = time % 60
@@ -117,7 +117,7 @@ const Player = ({songs, setSongs, isplaying, setisplaing, audioElem, currentSong
 
       <div className='flex justify-between mx-2 pl-2 mb-1'>
         <Image src={arrowLeft} alt='Назад'
-          // onClick={skipBack}
+          onClick={skipBack}
           className='cursor-pointer'/>
         <Image src={back15} alt='Перемотка на -15 секунд' onClick={rewind} className='cursor-pointer'/>
         {isplaying ? (
@@ -128,7 +128,7 @@ const Player = ({songs, setSongs, isplaying, setisplaing, audioElem, currentSong
         }
         <Image src={prew15} alt='Перемотка на +15 секунд' onClick={rewind_prew} className='cursor-pointer'/>
         <Image src={arrowRight} alt='Вперёд' 
-          // onClick={skipToNext}
+          onClick={skipToNext}
           className='cursor-pointer'/>
       </div>
 
@@ -144,9 +144,7 @@ const Player = ({songs, setSongs, isplaying, setisplaing, audioElem, currentSong
         </div>
       }
           <div className='mb-4'></div>
-      {/* Сделать чтоб большое количество элементов не вываливалось за приделы блока списка */}
       {/* Сделать переключение по клику */}
-      {/* Добавить описание и картинку */}
     </div>
   )
 }
