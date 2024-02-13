@@ -1,8 +1,6 @@
-import Banner from "./banner";
+import Banner from './banner'
 
 const MainBanner = () => {
-  return (
-    <Banner />
-  )
+  return <Banner />
 }
-export default MainBanner;
+export default MainBanner

@@ -1,9 +1,8 @@
 'use client'
-import Button from "@/app/shared/Button";
+import Button from '@/app/shared/Button'
 import { useRouter } from 'next/navigation'
-import { toast } from "react-toastify";
-import createSeries from "./action/create-series";
-
+import { toast } from 'react-toastify'
+import createSeries from './action/create-series'
 
 const Series = () => {
   const router = useRouter()
@@ -11,7 +10,7 @@ const Series = () => {
   const newSeries = async (data: FormData) => {
     const series = await createSeries(data)
 
-    if (typeof(series) === "string") {
+    if (typeof series === 'string') {
       console.log('Не удалось добавить серию')
       toast.error('Не удалось добавить серию')
     } else {
@@ -21,7 +20,6 @@ const Series = () => {
   }
   return (
     <>
-
       <div className="text-2xl text-center font-semibold">
         Страница создания серии
       </div>
@@ -33,9 +31,9 @@ const Series = () => {
         >
           <div className="flex flex-col px-4">
             <label htmlFor="name">Название серии</label>
-            <input 
-              type="text" 
-              name="name" 
+            <input
+              type="text"
+              name="name"
               className="border focus:border-2 border-[#1A202C] outline-none px-2 py-1 rounded-lg"
             />
             <div className="mt-6">
@@ -52,4 +50,4 @@ const Series = () => {
   )
 }
 
-export default Series;
+export default Series

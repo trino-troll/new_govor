@@ -1,5 +1,5 @@
 'use server'
-import prisma from "@/app/services/db"
+import prisma from '@/app/services/db'
 
 export default async function getNameImgBooks() {
   try {
@@ -8,10 +8,10 @@ export default async function getNameImgBooks() {
         name: true,
         slug: true,
         imageUrl: true,
-      }
+      },
     })
     return res
-  } catch(error) {
+  } catch (error) {
     console.log('Не удалось полоучить названия книг', error)
-  } 
+  }
 }

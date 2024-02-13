@@ -1,5 +1,5 @@
 'use server'
-import prisma from "@/app/services/db"
+import prisma from '@/app/services/db'
 
 export async function getAuthors() {
   const res = await prisma.authors.findMany()

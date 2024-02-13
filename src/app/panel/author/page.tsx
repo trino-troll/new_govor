@@ -1,9 +1,8 @@
 'use client'
-import Button from "@/app/shared/Button";
+import Button from '@/app/shared/Button'
 import { useRouter } from 'next/navigation'
-import createAuthor from "./action/create-author";
-import { toast } from "react-toastify";
-
+import createAuthor from './action/create-author'
+import { toast } from 'react-toastify'
 
 const Author = () => {
   const router = useRouter()
@@ -11,7 +10,7 @@ const Author = () => {
   const newAuthor = async (data: FormData) => {
     const author = await createAuthor(data)
 
-    if (typeof(author) === "string") {
+    if (typeof author === 'string') {
       console.log('Не удалось добавить автора')
       toast.error('Не удалось добавить автора')
     } else {
@@ -21,7 +20,6 @@ const Author = () => {
   }
   return (
     <>
-
       <div className="text-2xl text-center font-semibold">
         Страница создания автора
       </div>
@@ -33,9 +31,9 @@ const Author = () => {
         >
           <div className="flex flex-col px-4">
             <label htmlFor="name">Имя автора</label>
-            <input 
-              type="text" 
-              name="name" 
+            <input
+              type="text"
+              name="name"
               className="border focus:border-2 border-[#1A202C] outline-none px-2 py-1 rounded-lg"
             />
             <div className="mt-6">
@@ -52,4 +50,4 @@ const Author = () => {
   )
 }
 
-export default Author;
+export default Author

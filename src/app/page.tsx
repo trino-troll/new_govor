@@ -7,11 +7,11 @@ import Books from './books/page'
 export default function Home() {
   return (
     <>
-      <div className='text-center'>Это главная страница</div>
-      
-      <div className='grid grid-cols-2 gap-2 px-4'>
+      <div className="text-center">Это главная страница</div>
+
+      <div className="grid grid-cols-2 gap-2 px-4">
         <Books />
       </div>
     </>
   )
-  }
+}

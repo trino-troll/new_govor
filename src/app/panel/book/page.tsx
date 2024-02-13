@@ -1,32 +1,32 @@
 'use client'
-import Button from "@/app/shared/Button";
+import Button from '@/app/shared/Button'
 import { useRouter } from 'next/navigation'
-import { toast } from "react-toastify";
-import { useEffect, useRef, useState } from "react";
-import { getAuthors, getChtecs, getGenres, getSeries } from "./action/get-data";
-import CreateBook from "./action/create-book";
+import { toast } from 'react-toastify'
+import { useEffect, useRef, useState } from 'react'
+import { getAuthors, getChtecs, getGenres, getSeries } from './action/get-data'
+import CreateBook from './action/create-book'
 
 interface AuthorData {
-  id: number,
-  name: string,
+  id: number
+  name: string
 }
 interface ChtecData {
-  id: number,
-  name: string,
+  id: number
+  name: string
 }
-interface SeriesData{
-  id: number,
-  name: string,
+interface SeriesData {
+  id: number
+  name: string
 }
-interface GenreData{
-  id: number,
-  name: string,
+interface GenreData {
+  id: number
+  name: string
 }
 
 const Book = () => {
   const router = useRouter()
   const [authors, setAuthors] = useState<AuthorData[]>([])
-  const [chtecs, setChtecs ] = useState<ChtecData[]>([])
+  const [chtecs, setChtecs] = useState<ChtecData[]>([])
   const [series, setSeries] = useState<SeriesData[]>([])
   const [genres, setGenres] = useState<GenreData[]>([])
   const addImage = useRef<HTMLInputElement | null>(null)
@@ -49,10 +49,10 @@ const Book = () => {
       if (res) {
         toast.success(`Книга ${res.name} создана`)
       } else {
-        toast.error("Не удалось создать запись книги в БД")
+        toast.error('Не удалось создать запись книги в БД')
       }
       router.refresh()
-    } catch(error) {
+    } catch (error) {
       console.log(error)
     }
   }
@@ -61,7 +61,7 @@ const Book = () => {
     if (addImage.current) {
       addImage.current.click()
     }
-  } 
+  }
 
   useEffect(() => {
     listAuthors()
@@ -81,27 +81,26 @@ const Book = () => {
           <div className="flex flex-col px-4">
             <div className="flex flex-col px-4">
               <label htmlFor="name">Название книги</label>
-              <input 
-                type="text" 
-                name="name" 
+              <input
+                type="text"
+                name="name"
                 className="border focus:border-2 border-[#1A202C] outline-none px-2 py-1 rounded-lg"
               />
             </div>
 
             <div className="flex flex-col px-4 mt-2">
               <label htmlFor="description">Описание</label>
-              <textarea name="description" id="" cols={20} rows={4} 
+              <textarea
+                name="description"
+                id=""
+                cols={20}
+                rows={4}
                 className="border focus:border-2 border-[#1A202C] outline-none px-2 py-1 rounded-lg"
               ></textarea>
             </div>
 
             <div className="hidden">
-              <input 
-                type="file" 
-                name="file" 
-                ref={addImage}
-                accept="image/*"
-              />
+              <input type="file" name="file" ref={addImage} accept="image/*" />
             </div>
 
             <div className="px-4 mt-3">
@@ -110,46 +109,62 @@ const Book = () => {
 
             <div className="flex flex-col px-4 mt-2">
               <label htmlFor="author">Выбери автора</label>
-              <select name="author" id=""
+              <select
+                name="author"
+                id=""
                 className="border focus:border-2 border-[#1A202C] outline-none px-2 py-1 rounded-lg"
               >
                 {authors.map((author: AuthorData) => (
-                  <option key={author.id} value={author.id}>{author.name}</option>
+                  <option key={author.id} value={author.id}>
+                    {author.name}
+                  </option>
                 ))}
               </select>
             </div>
 
             <div className="flex flex-col px-4 mt-2">
               <label htmlFor="chtec">Выбери чтеца</label>
-              <select name="chtec" id=""
+              <select
+                name="chtec"
+                id=""
                 className="border focus:border-2 border-[#1A202C] outline-none px-2 py-1 rounded-lg"
               >
                 {chtecs.map((chtec: ChtecData) => (
-                  <option key={chtec.id} value={chtec.id}>{chtec.name}</option>
+                  <option key={chtec.id} value={chtec.id}>
+                    {chtec.name}
+                  </option>
                 ))}
               </select>
             </div>
 
             <div className="flex flex-col px-4 mt-2">
               <label htmlFor="series">Выбери серию</label>
-              <select name="series" id=""
+              <select
+                name="series"
+                id=""
                 className="border focus:border-2 border-[#1A202C] outline-none px-2 py-1 rounded-lg"
               >
                 <option value=""></option>
                 {series.map((chtec: ChtecData) => (
-                  <option key={chtec.id} value={chtec.id}>{chtec.name}</option>
+                  <option key={chtec.id} value={chtec.id}>
+                    {chtec.name}
+                  </option>
                 ))}
               </select>
             </div>
 
             <div className="flex flex-col px-4 mt-2">
               <label htmlFor="genre">Выбери жанр</label>
-              <select name="genre" id=""
+              <select
+                name="genre"
+                id=""
                 className="border focus:border-2 border-[#1A202C] outline-none px-2 py-1 rounded-lg"
               >
                 <option value=""></option>
                 {genres.map((chtec: ChtecData) => (
-                  <option key={chtec.id} value={chtec.id}>{chtec.name}</option>
+                  <option key={chtec.id} value={chtec.id}>
+                    {chtec.name}
+                  </option>
                 ))}
               </select>
             </div>
@@ -167,4 +182,4 @@ const Book = () => {
     </>
   )
 }
-export default Book;
+export default Book

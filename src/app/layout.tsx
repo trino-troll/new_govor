@@ -2,10 +2,10 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Header from './header/page'
-import React from 'react';
-import { ToastContainer, toast, Slide } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import MainBanner from './shared/banner/main-banner';
+import React from 'react'
+import { ToastContainer, toast, Slide } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import MainBanner from './shared/banner/main-banner'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} bg-black`}>
-        <div className='relative min-h-screen max-w-[450px] bg-[#FAFAFA] mx-auto pb-4'>
+        <div className="relative min-h-screen max-w-[450px] bg-[#FAFAFA] mx-auto pb-4">
           <Header />
           {children}
           <ToastContainer
@@ -36,7 +36,7 @@ export default function RootLayout({
             draggable
             pauseOnHover
             theme="colored"
-            transition={Slide} 
+            transition={Slide}
           />
           <MainBanner />
         </div>

@@ -1,9 +1,8 @@
 'use client'
-import Button from "@/app/shared/Button";
+import Button from '@/app/shared/Button'
 import { useRouter } from 'next/navigation'
-import { toast } from "react-toastify";
-import createGenre from "./action/create-genre";
-
+import { toast } from 'react-toastify'
+import createGenre from './action/create-genre'
 
 const Genres = () => {
   const router = useRouter()
@@ -11,7 +10,7 @@ const Genres = () => {
   const newGenre = async (data: FormData) => {
     const genre = await createGenre(data)
 
-    if (typeof(genre) === "string") {
+    if (typeof genre === 'string') {
       console.log('Не удалось добавить автора')
       toast.error('Не удалось добавить автора')
     } else {
@@ -21,7 +20,6 @@ const Genres = () => {
   }
   return (
     <>
-
       <div className="text-2xl text-center font-semibold">
         Страница создания жанра
       </div>
@@ -33,9 +31,9 @@ const Genres = () => {
         >
           <div className="flex flex-col px-4">
             <label htmlFor="name">Название жанра</label>
-            <input 
-              type="text" 
-              name="name" 
+            <input
+              type="text"
+              name="name"
               className="border focus:border-2 border-[#1A202C] outline-none px-2 py-1 rounded-lg"
             />
             <div className="mt-6">
@@ -52,4 +50,4 @@ const Genres = () => {
   )
 }
 
-export default Genres;
+export default Genres
