@@ -18,16 +18,22 @@ type Props = {
   audioElem: any,
   currentSong: CurrentSong,
   setCurrentSong: (song: CurrentSong) => void,
+  bookName: string,
 }
 
-const Player = ({songs, setSongs, isplaying, setisplaing, audioElem, currentSong, setCurrentSong}: Props) => {
+const Player = ({songs, setSongs, isplaying, setisplaing, audioElem, currentSong, setCurrentSong, bookName}: Props) => {
   const clickRef = useRef<HTMLDivElement>();
   const [isEmptyProgress, setIsEmptyProgress] = useState<boolean>(false)
   const [isShowList, setIsShowList] = useState<boolean>(false)
-  const [isScrolling, setIsScrolling] = useState<boolean>(false);
 
   const PlayPause = (play: boolean)=> {
-    setisplaing(play)
+    if (play) {
+      setisplaing(true)
+      localStorage.setItem('audioName', currentSong.name)
+      localStorage.setItem('bookName', bookName)
+    } else {
+      setisplaing(false)
+    }
   }
 
   const checkWidth = (e: any) => {
@@ -49,7 +55,7 @@ const Player = ({songs, setSongs, isplaying, setisplaing, audioElem, currentSong
     }
     audioElem.current.currentTime = 0;
     setIsEmptyProgress(true)
-    PlayPause(true)
+    PlayPause(false)
   }
 
   const skipToNext = () => {
@@ -61,7 +67,7 @@ const Player = ({songs, setSongs, isplaying, setisplaing, audioElem, currentSong
     }
     audioElem.current.currentTime = 0;
     setIsEmptyProgress(true)
-    PlayPause(true)
+    PlayPause(false)
   }
 
   const normalTime = (time: number) => {
@@ -90,15 +96,6 @@ const Player = ({songs, setSongs, isplaying, setisplaing, audioElem, currentSong
   useEffect(() => {
     setIsEmptyProgress(false)
   }, [isEmptyProgress])
-
-
-  useEffect(() => {
-    console.log(isScrolling)
-  }, [isScrolling])
-
-  useEffect(() => {
-    localStorage.setItem('audioName', currentSong.name)
-  }, [currentSong])
 
   return (
     <div className='bg-yellow-600 m-4 border-2 border-black rounded-3xl relative'>

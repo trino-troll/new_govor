@@ -98,16 +98,6 @@ const BookPage = ({params: { slug }}: Props) => {
       getAudioForBookOnClient(book.id, book.name)
     }
   }, [book])
-  useEffect(() => {
-    if (songs.length > 0) {
-      if (initialName) {
-        const findSong = songs.filter((song) => song.name === initialName)
-        setCurrentSong({...findSong[0], progress: 0})
-      } else {
-        setCurrentSong({...songs[0], progress: 0})
-      }
-    }
-  }, [songs])
 
   //плаер
   useEffect(() => {
@@ -138,13 +128,43 @@ const BookPage = ({params: { slug }}: Props) => {
     localStorage.setItem('audioTime', JSON.stringify(time) ); 
   }, [time])
 
-  useEffect(() => {
-    if (time > 0 && audioElem.current) {
-      audioElem.current.currentTime = time
-    }
-  }, [songs])
+  // useEffect(() => {
+  //   if (songs.length > 0) {
+  //     if (initialName) {
+  //       const findSong = songs.filter((song) => song.name === initialName)
+  //       setCurrentSong({...findSong[0], progress: 0})
+  //     } else {
+  //       setCurrentSong({...songs[0], progress: 0})
+  //     }
+  //   }
+  // }, [songs])
 
-  if (!book) return (<div>Загрузка</div>) 
+  useEffect(() => {
+    if (songs.length > 0) {
+      setCurrentSong({...songs[0], progress: 0});
+  
+      if (localStorage.getItem('bookName') === book?.name) { 
+        const initialName = localStorage.getItem('audioName');
+        if (initialName !== null && initialName !== 'undefined') {
+          const findSong = songs.find(song => song.name === initialName);
+          if (findSong) {
+            setCurrentSong({...findSong, progress: 0});
+          }
+        }
+  
+        const time = Number(localStorage.getItem('audioTime'));
+        if (time > 0 && audioElem.current) {
+          audioElem.current.currentTime = time;
+        }
+      }
+    }
+  }, [songs, book]);
+
+  if (!book) return (
+  <div className="flex w-full h-screen items-center justify-center text-xl font-semibold">
+    Загрузка...
+  </div>
+  ) 
 
   return(
     <>
@@ -161,7 +181,7 @@ const BookPage = ({params: { slug }}: Props) => {
         src={currentSong?.audioUrl} 
         ref={audioElem} 
         onTimeUpdate={osPlaying} 
-        autoPlay  
+        autoPlay={false} 
       />
       {songs && currentSong && (
         <Player 
@@ -172,6 +192,7 @@ const BookPage = ({params: { slug }}: Props) => {
         audioElem={audioElem}
         currentSong={currentSong}
         setCurrentSong={setCurrentSong}
+        bookName={book.name}
       />
       )}
     </>
