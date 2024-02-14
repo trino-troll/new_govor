@@ -1,8 +1,6 @@
 'use client'
 import Player from '@/app/shared/player'
-import { songsdata } from '@/app/shared/audio'
 import { useEffect, useRef, useState } from 'react'
-import image from '../../../../public/audiobooks/Атаманов_М_Искажающие_реальность_01/ir1.jpg'
 import Image from 'next/image'
 import getOneBook from './action/get-one-book'
 import getAudioForBook from './action/get-auido-for-book'

@@ -10,8 +10,11 @@ import MainBanner from './shared/banner/main-banner'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'ChatterBox',
-  description: 'Аудиокниги для меня. Аудиокниги для тебя. Аудиокниги для всех',
+  title: {
+    default: 'ChatterBox',
+    template: '%s | ChatterBox'
+  },
+  description: 'Аудиокниги для меня.',
 }
 
 export default function RootLayout({
