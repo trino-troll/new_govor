@@ -15,6 +15,12 @@ export default async function createGenre(data: any) {
     }
     const validGenre = createGenreScheme.parse(genreData)
 
+    const existsGenre = await prisma.genres.findFirst({where: {name: validGenre.name}})
+
+    if (existsGenre) {
+      throw new Error('Такой жанр уже есть')
+    }
+
     const genre = await prisma.genres.create({
       data: validGenre,
     })
@@ -24,7 +30,7 @@ export default async function createGenre(data: any) {
       console.log(error.errors[0].message)
       return error.errors[0].message
     }
-    console.log('Не удалось создать автора')
-    return JSON.stringify(error)
+    console.log('Не удалось создать жанр', error.message)
+    return JSON.stringify(error.message)
   }
 }

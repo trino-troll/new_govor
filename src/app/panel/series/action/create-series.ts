@@ -15,6 +15,12 @@ export default async function createSeries(data: any) {
     }
     const validSeries = createSeriesSchem.parse(seriesData)
 
+    const existsSeries = await prisma.series.findFirst({where: {name: validSeries.name}})
+
+    if (existsSeries) {
+      throw new Error('Такая серия уже существует')
+    }
+
     const series = await prisma.series.create({
       data: validSeries,
     })
@@ -24,7 +30,7 @@ export default async function createSeries(data: any) {
       console.log(error.errors[0].message)
       return error.errors[0].message
     }
-    console.log('Не удалось создать серию')
-    return JSON.stringify(error)
+    console.log('Не удалось создать серию', error.message)
+    return JSON.stringify(error.message)
   }
 }

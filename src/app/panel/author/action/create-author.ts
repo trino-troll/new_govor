@@ -15,6 +15,13 @@ export default async function createAuthor(data: any) {
     }
     const validAutor = createAuthorSchem.parse(authorData)
 
+    const existsAutor = await prisma.authors.findFirst({where: {name: validAutor.name}})
+    console.log(existsAutor)
+    if (existsAutor) {
+      console.log(1213)
+      throw new Error("Такой автор уже есть")
+    }
+
     const author = await prisma.authors.create({
       data: validAutor,
     })
@@ -24,7 +31,7 @@ export default async function createAuthor(data: any) {
       console.log(error.errors[0].message)
       return error.errors[0].message
     }
-    console.log('Не удалось создать автора')
-    return JSON.stringify(error)
+    console.log('Не удалось создать автора', error.message)
+    return JSON.stringify(error.message)
   }
 }

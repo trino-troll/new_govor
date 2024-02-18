@@ -11,8 +11,8 @@ const Genres = () => {
     const genre = await createGenre(data)
 
     if (typeof genre === 'string') {
-      console.log('Не удалось добавить автора')
-      toast.error('Не удалось добавить автора')
+      console.log('Не удалось добавить автора', genre)
+      toast.error(genre)
     } else {
       console.log(genre)
       toast.success(`Автор ${genre.name} создан`)

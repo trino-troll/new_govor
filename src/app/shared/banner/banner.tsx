@@ -46,7 +46,7 @@ const Banner = () => {
   return (
     <>
       {showBanner && (
-        <div className="absolute top-0 left-0 w-full h-screen flex flex-col items-center justify-between bg-slate-300 border-[15px] border-[#1A202C] pt-2 pb-8">
+        <div className="absolute top-0 left-0 w-full h-screen flex flex-col items-center justify-around bg-slate-300 border-[15px] border-[#1A202C] pt-2 pb-8">
           <Timer time={3} />
           <h2 className="font-semibold text-2xl text-center">
             <p>Давай</p>

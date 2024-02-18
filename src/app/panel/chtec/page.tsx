@@ -11,8 +11,8 @@ const Chtec = () => {
     const chtec = await createChtec(data)
 
     if (typeof chtec === 'string') {
-      console.log('Не удалось добавить чтеца')
-      toast.error('Не удалось добавить чтеца')
+      console.log('Не удалось добавить чтеца', chtec)
+      toast.error(chtec)
     } else {
       console.log(chtec)
       toast.success(`Чтец ${chtec.name} создан`)

@@ -15,6 +15,12 @@ export default async function createChtec(data: any) {
     }
     const validChtec = createChtecSchem.parse(chtecData)
 
+    const existsChtec = await prisma.chtecs.findFirst({where: {name: validChtec.name}})
+
+    if (existsChtec) {
+      throw new Error('Такой чтец уже есть')
+    }
+
     const chtec = await prisma.chtecs.create({
       data: validChtec,
     })
@@ -24,7 +30,7 @@ export default async function createChtec(data: any) {
       console.log(error.errors[0].message)
       return error.errors[0].message
     }
-    console.log('Не удалось создать чтеца')
-    return JSON.stringify(error)
+    console.log('Не удалось создать чтеца', error.message)
+    return JSON.stringify(error.message)
   }
 }

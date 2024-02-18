@@ -19,10 +19,11 @@ const Books = async () => {
         <Link key={i} href={`/books/${book.slug}`}>
           <div className="flex flex-col bg-[#1A202C] rounded-xl overflow-auto h-full">
             <Image
-              src={book.imageUrl.replace('public', '')}
-              alt="Изо"
+              src={book.imageUrl}
+              alt={book.name}
               width={210}
               height={210}
+              max-height={210}
             />
             <div className="text-center font-semibold text-white pb-1">
               {book.name}

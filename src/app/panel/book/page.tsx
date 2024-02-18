@@ -46,10 +46,12 @@ const Book = () => {
     try {
       const res = await CreateBook(data)
       console.log(data.get('file'))
-      if (res) {
+      if (res === 'Такая книга уже есть') {
+        toast.error(res)
+      } else if (res.name){
         toast.success(`Книга ${res.name} создана`)
       } else {
-        toast.error('Не удалось создать запись книги в БД')
+        toast.error('Не удалось создать книгу')
       }
       router.refresh()
     } catch (error) {

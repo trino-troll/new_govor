@@ -11,8 +11,8 @@ const Series = () => {
     const series = await createSeries(data)
 
     if (typeof series === 'string') {
-      console.log('Не удалось добавить серию')
-      toast.error('Не удалось добавить серию')
+      console.log('Не удалось добавить серию', series)
+      toast.error(series)
     } else {
       console.log(series)
       toast.success(`Серия ${series.name} создана`)

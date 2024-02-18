@@ -77,6 +77,7 @@ const AudioFile = () => {
               id=""
               className="border focus:border-2 border-[#1A202C] outline-none px-2 py-1 rounded-lg"
             >
+              <option value=''></option>
               {books.map((book: BookData) => (
                 <option key={book.id} value={book.id}>
                   {book.name}

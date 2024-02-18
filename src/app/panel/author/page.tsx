@@ -11,8 +11,8 @@ const Author = () => {
     const author = await createAuthor(data)
 
     if (typeof author === 'string') {
-      console.log('Не удалось добавить автора')
-      toast.error('Не удалось добавить автора')
+      console.log('Не удалось добавить автора', author)
+      toast.error(author)
     } else {
       console.log(author)
       toast.success(`Автор ${author.name} создан`)

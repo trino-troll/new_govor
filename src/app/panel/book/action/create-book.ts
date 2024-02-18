@@ -61,12 +61,19 @@ export default async function CreateBook(data: any) {
 
       const validBook = CreateBookScheme.parse(dataBook)
 
+      const existsBook = await prisma.books.findFirst({where: {name: validBook.name}})
+
+      if (existsBook) {
+        throw new Error('Такая книга уже есть')
+      }
+
       const book = await prisma.books.create({
         data: validBook,
       })
       return book
     }
-  } catch (error) {
-    console.log('Не удалось сделать запись в таблицу books.', error)
+  } catch (error: any) {
+    console.log('Не удалось сделать запись в таблицу books.', error. message)
+    return (error.message)
   }
 }
