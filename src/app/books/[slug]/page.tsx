@@ -177,7 +177,7 @@ const BookPage = ({ params: { slug } }: Props) => {
         src={currentSong?.audioUrl}
         ref={audioElem}
         onTimeUpdate={osPlaying}
-        autoPlay={false}
+        autoPlay={true}
       />
       {songs && currentSong && (
         <Player

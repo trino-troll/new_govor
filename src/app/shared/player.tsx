@@ -118,6 +118,7 @@ const Player = ({
   useEffect(() => {
     if (audioElem.current.currentTime === audioElem.current.duration) {
       skipToNext()
+      PlayPause(true)
     }
   }, [audioElem, skipToNext])
 
