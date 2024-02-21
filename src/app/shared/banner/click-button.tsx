@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import Button from '../Button'
 import { useMainBanner } from '@/app/store'
-import countClick from './action/count-click'
+import { countClick } from './action/count-click'
 
 const ClickButton = () => {
   const { setShowBanner, isDisabledMainBtn } = useMainBanner()

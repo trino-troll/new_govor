@@ -4,12 +4,14 @@ import { useMainBanner } from '@/app/store'
 import Timer from '../timer'
 import ClickButton from './click-button'
 import { useEffect, useState } from 'react'
+import { countClickToMain } from './action/count-click'
 
 const Banner = () => {
   const { showBanner, setShowBanner } = useMainBanner()
   const [currentMinutem, setCurrentMinute] = useState<number>(
     new Date().getMinutes(),
   )
+  const [count, setCount] = useState<any>()
 
   // Установка или чтение часа из локалСтораж
   useEffect(() => {
@@ -22,7 +24,7 @@ const Banner = () => {
       }
 
       setCurrentMinute(currentMinutes)
-    }, 60 * 1000)
+    }, 15 * 60 * 1000)
 
     // Показать баннер при загрузке страницы
     setShowBanner(true)
@@ -43,6 +45,18 @@ const Banner = () => {
     }
   }, [showBanner])
 
+  const counter = async () => {
+    const res = await countClickToMain()
+    if (res !== undefined) {
+      setCount(res)
+    }
+  }
+
+  useEffect(() =>  {
+    counter()
+  })
+
+
   return (
     <>
       {showBanner && (
@@ -54,6 +68,12 @@ const Banner = () => {
             <p>посчитаю =)</p>
           </h2>
           <ClickButton />
+          {count && (
+            <div className='w-full flex justify-between px-8'>
+              <p>{count.day}</p>
+              <p>{count.total}</p>
+            </div>
+          )}
         </div>
       )}
     </>

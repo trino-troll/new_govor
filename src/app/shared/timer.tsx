@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import CrossClosa from '../../../public/cross_close.svg'
 import Image from 'next/image'
 import { useMainBanner } from '../store'
-import countClick from './banner/action/count-click'
+import { countClick } from './banner/action/count-click'
 
 type Props = {
   time: number

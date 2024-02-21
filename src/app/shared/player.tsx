@@ -51,6 +51,7 @@ const Player = ({
     } else {
       setisplaing(false)
     }
+    console.log(Math.floor(audioElem.current.duration))
   }
 
   const checkWidth = (e: any) => {
@@ -114,6 +115,12 @@ const Player = ({
     setIsEmptyProgress(false)
   }, [isEmptyProgress])
 
+  useEffect(() => {
+    if (audioElem.current.currentTime === audioElem.current.duration) {
+      skipToNext()
+    }
+  }, [audioElem, skipToNext])
+
   return (
     <div className="bg-yellow-600 m-4 border-2 border-black rounded-3xl relative">
       <Image
@@ -132,7 +139,7 @@ const Player = ({
         ) : (
           <p>00:00</p>
         )}
-        {/* <p>{currentSong.time}</p> */}
+        {audioElem.current.currentTime && <p>{normalTime(Math.round(audioElem.current.duration))}</p> }
       </div>
       <div className="px-4 mb-2">
         <div
