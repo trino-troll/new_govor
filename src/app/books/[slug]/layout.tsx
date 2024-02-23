@@ -9,10 +9,9 @@ type Props = {
 export const generateMetadata = async ({params: { slug}}: Props) => {
   const book = await prisma.books.findFirst({where: {slug: slug}})
   if (book) {
-    const desc = book.description.slice(0,71) +'...'
     return {
       title: book.name,
-      description: desc
+      description: `Слушать аудиокнигу ${book.name}`
     }
   }
 }

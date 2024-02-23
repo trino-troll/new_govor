@@ -34,14 +34,16 @@ const Banner = () => {
   // Установка или чтение часа из локалСтораж конец
 
   useEffect(() => {
-    const handleScroll = (e: WheelEvent) => {
+    const handleScroll = (e: WheelEvent | TouchEvent) => {
       if (showBanner) {
         e.preventDefault()
       }
     }
     document.addEventListener('wheel', handleScroll, { passive: false })
+    document.addEventListener('touchmove', handleScroll, { passive: false })
     return () => {
       document.removeEventListener('wheel', handleScroll)
+      document.removeEventListener('touchmove', handleScroll)
     }
   }, [showBanner])
 
@@ -54,7 +56,7 @@ const Banner = () => {
 
   useEffect(() =>  {
     counter()
-  })
+  }, [])
 
 
   return (
