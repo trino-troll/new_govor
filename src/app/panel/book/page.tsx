@@ -3,7 +3,7 @@ import Button from '@/app/shared/Button'
 import { useRouter } from 'next/navigation'
 import { toast } from 'react-toastify'
 import { useEffect, useRef, useState } from 'react'
-import { getAuthors, getChtecs, getGenres, getSeries } from './action/get-data'
+import { getAuthors, getBooks, getChtecs, getGenres, getSeries } from './action/get-data'
 import CreateBook from './action/create-book'
 
 interface AuthorData {
@@ -22,6 +22,10 @@ interface GenreData {
   id: number
   name: string
 }
+interface BookType {
+  id: number
+  name: string
+}
 
 const Book = () => {
   const router = useRouter()
@@ -30,6 +34,14 @@ const Book = () => {
   const [series, setSeries] = useState<SeriesData[]>([])
   const [genres, setGenres] = useState<GenreData[]>([])
   const addImage = useRef<HTMLInputElement | null>(null)
+  const [books, setBooks] = useState<BookType[]>([])
+  const [filteredBooks, setFilteredBooks] = useState<BookType[]>([])
+  const [findBooks, setFindBooks] = useState<string>('')
+
+  const bookExists = async () => {
+    const res = await getBooks()
+    setBooks(res)
+  } 
 
   const listAuthors = async () => {
     const resAuthor = await getAuthors()
@@ -50,6 +62,7 @@ const Book = () => {
         toast.error(res)
       } else if (res.name){
         toast.success(`Книга ${res.name} создана`)
+        router.refresh()
       } else {
         toast.error('Не удалось создать книгу')
       }
@@ -65,9 +78,23 @@ const Book = () => {
     }
   }
 
+  const find_book = (value: string) => {
+    const filteredBooks = books.filter((item) => item.name.toLowerCase().includes(value))
+    setFilteredBooks(filteredBooks)
+  }
+
   useEffect(() => {
     listAuthors()
+    bookExists()
   }, [])
+
+  useEffect(() => {
+    if (findBooks) {
+      find_book(findBooks)
+    } else {
+      setFilteredBooks(books)
+    }
+  }, [findBooks, books])
 
   return (
     <>
@@ -181,6 +208,31 @@ const Book = () => {
       <div className="mt-6 px-4">
         <Button onClick={() => router.back()}>Вернуться</Button>
       </div>
+
+      <div className='mt-4 mb-2 px-4'>
+        <div className='font-semibold text-red-800 text-center'>ПРОВЕРЬ! Возможно такая книга уже есть!!!</div>
+        <input 
+          type="text" 
+          placeholder='Автор существует?'
+          className='border border-[#1A202C] w-full px-2 py-1 rounded-lg focus:border-2 outline-none'
+          onChange={(e) => setFindBooks(e.target.value.toLowerCase())}
+        /> 
+      </div>
+
+      {books.length > 0 && (
+        <div className='text-center'>
+          <div className='grid grid-cols-2 gap-2 px-4'>
+            {filteredBooks.map((book: BookType, i: number) => (
+              <div 
+                key={book.id}
+                className='bg-[#1A202C] text-white rounded-md'
+              >
+                {book.name}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </>
   )
 }
