@@ -91,7 +91,7 @@ const AudioFile = () => {
     if (bookId) {
       currentAddAudio(bookId)
     }
-  })
+  }, [bookId])
 
   return (
     <>
