@@ -71,7 +71,6 @@ const AudioFile = () => {
         tmpArrNames.push(file.name)
       })
       setNamesFiles(tmpArrNames)
-      console.log(files[0].name)
     }
   }
 

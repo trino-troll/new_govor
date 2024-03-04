@@ -4,7 +4,9 @@ import { useRouter } from 'next/navigation'
 import { toast } from 'react-toastify'
 import { useEffect, useRef, useState } from 'react'
 import { getAuthors, getBooks, getChtecs, getGenres, getSeries } from './action/get-data'
-import CreateBook from './action/create-book'
+import { CreateBook } from './action/create-book'
+import { Pencil } from 'lucide-react'
+import Link from 'next/link'
 
 interface AuthorData {
   id: number
@@ -37,6 +39,7 @@ const Book = () => {
   const [books, setBooks] = useState<BookType[]>([])
   const [filteredBooks, setFilteredBooks] = useState<BookType[]>([])
   const [findBooks, setFindBooks] = useState<string>('')
+  const [showCreatePanel, setShowCreatePanel] = useState<boolean>(false)
 
   const bookExists = async () => {
     const res = await getBooks()
@@ -101,8 +104,13 @@ const Book = () => {
       <div className="text-2xl text-center font-semibold">
         Страница создания книги
       </div>
-
-      <div className="px-4 mt-6">
+      <div className='px-4'>
+        <Button
+          onClick={() => setShowCreatePanel(!showCreatePanel)}
+        >{showCreatePanel ? 'Скрыть панель' : 'Открыть панель'}</Button>
+      </div>
+      {showCreatePanel && (
+        <div className="px-4 mt-6">
         <form
           action={newBook}
           className="border-2 border-[#1A202C] p-2 rounded-xl "
@@ -204,6 +212,8 @@ const Book = () => {
           </div>
         </form>
       </div>
+      )}
+      
 
       <div className="mt-6 px-4">
         <Button onClick={() => router.back()}>Вернуться</Button>
@@ -225,9 +235,10 @@ const Book = () => {
             {filteredBooks.map((book: BookType, i: number) => (
               <div 
                 key={book.id}
-                className='bg-[#1A202C] text-white rounded-md'
+                className='bg-[#1A202C] text-white rounded-md relative'
               >
                 {book.name}
+                <Link href={`/panel/book/update/${book.id}`} className='absolute bottom-1 right-1'><Pencil size={16}/></Link>
               </div>
             ))}
           </div>
