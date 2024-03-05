@@ -119,8 +119,10 @@ const Player = ({
     if (audioElem.current.currentTime === audioElem.current.duration) {
       skipToNext()
       PlayPause(true)
+      const index = songs.findIndex((x) => x.name === currentSong.name)
+      localStorage.setItem('audioName', songs[index + 1].name);
     }
-  }, [audioElem, skipToNext])
+  }, [audioElem, skipToNext]) 
 
   return (
     <div className="bg-yellow-600 m-4 border-2 border-black rounded-3xl relative">
