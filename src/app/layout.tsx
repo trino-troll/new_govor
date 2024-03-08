@@ -6,6 +6,7 @@ import React from 'react'
 import { ToastContainer, toast, Slide } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import MainBanner from './shared/banner/main-banner'
+import Footer from './footer/page'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -25,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} bg-black`}>
-        <div className="relative min-h-screen max-w-[450px] bg-[#FAFAFA] mx-auto pb-4">
+        <div className="relative min-h-screen max-w-[450px] bg-[#FAFAFA] mx-auto">
           <Header />
           {children}
           <ToastContainer
@@ -42,6 +43,7 @@ export default function RootLayout({
             transition={Slide}
           />
           <MainBanner />
+          <Footer />
         </div>
       </body>
     </html>
