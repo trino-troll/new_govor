@@ -126,6 +126,11 @@ const Player = ({
     }
   }, [audioElem, skipToNext]) 
 
+  const handleEnterByName = (song: AudioFiles) => {
+    setCurrentSong(song)
+    PlayPause(true)
+  }
+
   return (
     <div className="bg-yellow-600 m-4 border-2 border-black rounded-3xl relative">
       <Image
@@ -208,10 +213,12 @@ const Player = ({
         <div className="bg-yellow-500 rounded-lg mx-4 mb-6 p-2 divide-y-2 divide-black h-52 overflow-y-auto">
           {songs.map((song, i: number) => (
             <div
-              className="flex justify-between cursor-pointer py-2 font-semibold"
+              className="flex justify-between items-center cursor-pointer py-2 font-semibold"
               key={i}
+              onClick={() => handleEnterByName(song)}
             >
               <p>{song.name}</p>
+              {currentSong.name === song.name &&  <div className='w-4 h-4 rounded-full bg-orange-600 mr-4'></div>}
             </div>
           ))}
         </div>
