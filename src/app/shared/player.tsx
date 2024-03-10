@@ -9,8 +9,6 @@ import back15 from '../../../public/back15.svg'
 import list from '../../../public/list.svg'
 import {
   Dispatch,
-  LegacyRef,
-  MutableRefObject,
   SetStateAction,
   useEffect,
   useRef,
@@ -118,7 +116,10 @@ const Player = ({
   useEffect(() => {
     if (audioElem.current.currentTime === audioElem.current.duration) {
       const index = songs.findIndex((x) => x.name === currentSong.name)
-      if (index === songs.length - 1 && audioElem.current.currentTime === audioElem.current.duration) return
+      if (index === songs.length - 1 && audioElem.current.currentTime === audioElem.current.duration) {
+        PlayPause(false)
+        return
+      }
       skipToNext()
       PlayPause(true)
       localStorage.setItem('audioName', songs[index + 1].name);

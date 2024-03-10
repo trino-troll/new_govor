@@ -59,7 +59,6 @@ const BookPage = ({ params: { slug } }: Props) => {
   const [isplaying, setisplaing] = useState(false)
   const [currentSong, setCurrentSong] = useState<CurrentSong>()
   const audioElem = useRef<HTMLAudioElement | null>(null)
-  const [showDesc, setShowDesc] = useState<boolean>(false)
   const [book, setBook] = useState<Book | null>(null)
 
   //Получение книги
