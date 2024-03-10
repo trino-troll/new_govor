@@ -9,17 +9,19 @@ const Header = () => {
 
   return (
     <>
-      {showBannerFreand && <BannerFreand />}
-      <div className="sticky top-0 z-10 flex justify-between items-center py-1 px-6 bg-[#1A202C] mb-[20px]">
-        <Link href={'/'}>
-          <h1 className="font-semibold text-[30px] text-white">ChatterBox</h1>
-        </Link>
-        <button 
-          className="w-[70px] h-[70px]" 
-          onClick={() => setShowBannerFreand(!showBannerFreand)}
-        >
-          <Image src={Logo} alt="ChatterBox - лучшая аудиокнига"></Image>
-        </button>
+      <div className='mb-5 sticky top-0 z-10'>
+        <div className=" flex justify-between items-center py-1 px-6 bg-[#1A202C] ">
+          <Link href={'/'}>
+            <h1 className="font-semibold text-[30px] text-white">ChatterBox</h1>
+          </Link>
+          <button 
+            className="w-[70px] h-[70px]" 
+            onClick={() => setShowBannerFreand(!showBannerFreand)}
+          >
+            <Image src={Logo} alt="ChatterBox - лучшая аудиокнига"></Image>
+          </button>
+        </div>
+        {showBannerFreand && <BannerFreand />}
       </div>
     </>
   )
