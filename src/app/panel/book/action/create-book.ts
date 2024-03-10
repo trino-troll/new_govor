@@ -106,6 +106,21 @@ export async function  updateBook(data: any, id: string) {
       await rename('public' + oldPath, newPath)
   }
 
+  if (newPath) {
+    console.log(newPath)
+    const nameAudioNew = await prisma.audioFiles.findMany({where: {bookId: book?.id}})
+    for (const item of nameAudioNew) {
+      await prisma.audioFiles.update({
+          where: {
+              id: item.id
+          },
+          data: {
+              audioUrl: `${newPath.replace('public', '')}/${item.name}`
+          }
+      })
+  }
+  }
+
   let newImageUrl = ''
   if (newPath && book) {
     const tmpImgUrl = book.imageUrl

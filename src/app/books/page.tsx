@@ -17,17 +17,16 @@ const Books = async () => {
     <>
       {books.map((book, i: number) => (
         <Link key={i} href={`/books/${book.slug}`}>
-          <div className="flex flex-col items-center bg-[#1A202C] rounded-xl overflow-auto h-full border border-[#1A202C]">
+          <div className="flex flex-col items-center bg-[#1A202C] rounded-xl overflow-auto border border-[#1A202C]">
             <Image
               src={book.imageUrl}
               alt={book.name}
-              width={100}
-              height={210}
-              max-height={210}
+              width={140}
+              height={140}
             />
-            <div className="text-center text-white pb-1">
+            {/* <div className="text-center text-white pb-1">
               {book.name}
-            </div>
+            </div> */}
           </div>
         </Link>
       ))}

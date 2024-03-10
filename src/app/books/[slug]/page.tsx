@@ -101,6 +101,7 @@ const BookPage = ({ params: { slug } }: Props) => {
   //плаер
   useEffect(() => {
     if (isplaying) {
+      console.log(audioElem.current)
       audioElem.current?.play()
     } else {
       audioElem.current?.pause()

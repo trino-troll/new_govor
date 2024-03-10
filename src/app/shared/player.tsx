@@ -117,9 +117,10 @@ const Player = ({
 
   useEffect(() => {
     if (audioElem.current.currentTime === audioElem.current.duration) {
+      const index = songs.findIndex((x) => x.name === currentSong.name)
+      if (index === songs.length - 1 && audioElem.current.currentTime === audioElem.current.duration) return
       skipToNext()
       PlayPause(true)
-      const index = songs.findIndex((x) => x.name === currentSong.name)
       localStorage.setItem('audioName', songs[index + 1].name);
     }
   }, [audioElem, skipToNext]) 
