@@ -2,9 +2,17 @@
 import Player from '@/app/shared/player'
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
-import getOneBook from './action/get-one-book'
+import { getOneBook, getSeriesBooks } from './action/get-one-book'
 import getAudioForBook from './action/get-auido-for-book'
 import { toast } from 'react-toastify'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
+import Link from 'next/link'
 
 type Props = {
   params: {
@@ -60,6 +68,7 @@ const BookPage = ({ params: { slug } }: Props) => {
   const [currentSong, setCurrentSong] = useState<CurrentSong>()
   const audioElem = useRef<HTMLAudioElement | null>(null)
   const [book, setBook] = useState<Book | null>(null)
+  const [allSiries, setAllSeries] = useState<Book[]>([])
 
   //Получение книги
   const getBook = async () => {
@@ -67,6 +76,19 @@ const BookPage = ({ params: { slug } }: Props) => {
       const fetchBook = await getOneBook(slug)
       if (fetchBook && typeof fetchBook !== 'string') {
         setBook(fetchBook)
+      } else {
+        toast.error('Ошибка получения книги', { autoClose: 3000 })
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  //Получение книг серии
+  const getSiriesAll = async (series: number) => {
+    try {
+      const allBooksSiries = await getSeriesBooks(series)
+      if (allBooksSiries && typeof allBooksSiries !== 'string') {
+        setAllSeries(allBooksSiries)
       } else {
         toast.error('Ошибка получения книги', { autoClose: 3000 })
       }
@@ -94,6 +116,9 @@ const BookPage = ({ params: { slug } }: Props) => {
   useEffect(() => {
     if (book) {
       getAudioForBookOnClient(book.id, book.name)
+    }
+    if (book?.seriesId) {
+      getSiriesAll(book.seriesId)
     }
   }, [book])
 
@@ -168,7 +193,7 @@ const BookPage = ({ params: { slug } }: Props) => {
             src={book.imageUrl}
             width={210}
             height={210}
-            alt="Изображение"
+            alt={book.name}
           />
         </div>
         <p className="px-4">{book.description}</p>
@@ -191,6 +216,33 @@ const BookPage = ({ params: { slug } }: Props) => {
           bookName={book.name}
         />
       )}
+
+      {allSiries.length > 1 && (
+        <div>
+          <h2 className='font-semibold text-2xl ml-4'>Книги из серии</h2>
+          <div className='m-auto w-2/3'>
+            <Carousel className='relative'>
+              <CarouselContent >
+                {allSiries.map((item, i: number) => (
+                  <CarouselItem key={i} className="basis-1/2">
+                    <Link href={`/books/${item.slug}`}>
+                      <Image
+                        src={item.imageUrl}
+                        width={140}
+                        height={140}
+                        alt={item.name}
+                      />
+                    </Link>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className='absolute -left-12 bg-[#1A202C] text-white'/>
+              <CarouselNext className='absolute -right-12 bg-[#1A202C] text-white'/>
+            </Carousel>
+          </div>
+        </div>
+      )}
+      
     </>
   )
 }
