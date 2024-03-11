@@ -17,7 +17,9 @@ const Books = async () => {
   return (
     <>
       {books.map((book: MainBook, i: number) => (
-        book.slug && <BookCard slug={book.slug} imageUrl={book.imageUrl} name={book.name} keyI={i} />
+        <div key={i}>
+          {book.slug && <BookCard slug={book.slug} imageUrl={book.imageUrl} name={book.name}/>}
+        </div>
       ))}
     </>
   )
