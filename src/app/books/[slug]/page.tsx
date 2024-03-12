@@ -64,7 +64,7 @@ const BookPage = ({ params: { slug } }: Props) => {
   // Конец
 
   const [songs, setSongs] = useState<AudioFiles[]>([])
-  const [isplaying, setisplaing] = useState(false)
+  const [isplaying, setisplaing] = useState(true)
   const [currentSong, setCurrentSong] = useState<CurrentSong>()
   const audioElem = useRef<HTMLAudioElement | null>(null)
   const [book, setBook] = useState<Book | null>(null)
