@@ -14,12 +14,21 @@ interface MainBook {
 const Books = () => {
 
   const [books, setBooks] = useState<MainBook[]>([])
-  const { bookSearch } = useSearch()
+  const { textSearch } = useSearch()
+  let timer: NodeJS.Timeout;
   const getBooksAll = async () => {
     try {
-      const booksArr = await getNameImgBooks()
+      const booksArr = await getNameImgBooks(textSearch)
       if (booksArr) {
-        setBooks(booksArr)
+        if (timer) {
+          clearTimeout(timer);
+        }
+      
+        // Устанавливаем новый таймер
+        timer = setTimeout(() => {
+          setBooks(booksArr)
+        }, 2000);
+        
       }
     } catch(error) {
       console.log(error)
@@ -28,15 +37,7 @@ const Books = () => {
 
   useEffect(() => {
     getBooksAll()
-  }, [])
-
-  useEffect(() => {
-    if (bookSearch) {
-      setBooks(bookSearch)
-    } else {
-      getBooksAll()
-    }
-  }, [bookSearch])
+  }, [textSearch])
 
   if (books.length === 0) return <div className='text-2xl w-full text-center'>Ничего не найдено <span>🤷‍♀️</span></div>
 
