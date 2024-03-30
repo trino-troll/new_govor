@@ -24,21 +24,23 @@ export function SearchField() {
 
   return (
     <div className='px-4'>
-      <div className='my-2 w-full border-2 rounded-2xl  border-[#1A202C]'>
+      <div className='my-2 border-2 rounded-2xl  border-[#1A202C]'>
         <form onSubmit={(e) => findedBook(e)} className='flex justify-between' >
           <input  type="text" 
-                  className='text-6 ull mr-4 rounded-2xl outline-none bg-white px-4' 
+                  className='text-6 w-2/3 rounded-2xl outline-none bg-white pl-4' 
                   onChange={(e) => setTextSearch(e.target.value)}
                   value={textSearch}
                   placeholder='Введи назание книги'  
                   />
           <div className='flex items-center'>
             {textSearch && (
-              <div onClick={() => setTextSearch('')}>
+              <div onClick={() => setTextSearch('')}
+              className='mr-3'
+              >
                 <X size={30} color='red' />
               </div>
             )}
-            <button type='submit' className='ml-2 p-2 pl-3 bg-[#1A202C] rounded-xl'> 
+            <button type='submit' className='p-2 bg-[#1A202C] rounded-xl'> 
               <Search  size={24} color={'#ffffff'} strokeWidth={3}/>
             </button>
           </div>
