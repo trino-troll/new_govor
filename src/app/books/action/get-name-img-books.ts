@@ -18,7 +18,7 @@ export default async function getNameImgBooks(findText: string) {
           imageUrl: true,
         },
       })
-      return res
+      return res.reverse()
     }
   } catch (error) {
     console.log('Не удалось полоучить названия книг', error)
