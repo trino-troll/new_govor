@@ -69,6 +69,7 @@ const BookPage = ({ params: { slug } }: Props) => {
   const audioElem = useRef<HTMLAudioElement | null>(null)
   const [book, setBook] = useState<Book | null>(null)
   const [allSiries, setAllSeries] = useState<Book[]>([])
+  const [loadedFile, setLoadedFile] = useState<number>(0)
 
   //Получение книги
   const getBook = async () => {
@@ -125,7 +126,6 @@ const BookPage = ({ params: { slug } }: Props) => {
   //плаер
   useEffect(() => {
     if (isplaying) {
-      console.log(audioElem.current)
       audioElem.current?.play()
     } else {
       audioElem.current?.pause()
@@ -177,6 +177,21 @@ const BookPage = ({ params: { slug } }: Props) => {
     }
   }, [songs, book])
 
+  useEffect(() => {
+
+      if (currentSong && audioElem.current) {
+        if (audioElem.current.buffered.length > 0) {
+          const bufferedEnd = audioElem.current.buffered.end(audioElem.current.buffered.length - 1);
+          const duration = audioElem.current.duration;
+          const loadTime = Math.round((bufferedEnd / duration) * 100)
+          if (loadTime !== loadedFile) {
+            setLoadedFile(loadTime)
+          }
+        }
+    };
+
+  }, [currentSong, loadedFile]);
+
   if (!book)
     return (
       <div className="flex w-full h-screen items-center justify-center text-xl font-semibold">
@@ -214,6 +229,7 @@ const BookPage = ({ params: { slug } }: Props) => {
           currentSong={currentSong}
           setCurrentSong={setCurrentSong}
           bookName={book.name}
+          loadedFile={loadedFile}
         />
       )}
 

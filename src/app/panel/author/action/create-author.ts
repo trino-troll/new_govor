@@ -18,7 +18,6 @@ export default async function createAuthor(data: any) {
     const existsAutor = await prisma.authors.findFirst({where: {name: validAutor.name}})
     console.log(existsAutor)
     if (existsAutor) {
-      console.log(1213)
       throw new Error("Такой автор уже есть")
     }
 

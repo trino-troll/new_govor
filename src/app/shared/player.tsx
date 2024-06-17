@@ -25,6 +25,7 @@ type Props = {
   currentSong: CurrentSong
   setCurrentSong: (song: CurrentSong) => void
   bookName: string
+  loadedFile: number
 }
 
 const Player = ({
@@ -36,6 +37,7 @@ const Player = ({
   currentSong,
   setCurrentSong,
   bookName,
+  loadedFile
 }: Props) => {
   const clickRef = useRef<HTMLDivElement>()
   const [isEmptyProgress, setIsEmptyProgress] = useState<boolean>(false)
@@ -49,7 +51,6 @@ const Player = ({
     } else {
       setisplaing(false)
     }
-    console.log(Math.floor(audioElem.current.duration))
   }
 
   const checkWidth = (e: any) => {
@@ -157,12 +158,20 @@ const Player = ({
           onClick={checkWidth}
           ref={clickRef as React.RefObject<HTMLDivElement>}
         >
-          <div
-            className="bg-green-700 h-3 rounded-lg"
-            style={{
-              width: `${isEmptyProgress ? '0' : currentSong.progress}%`,
-            }}
-          ></div>
+          <div className='relative'>
+            <div
+              className="bg-yellow-500 h-3 rounded-lg"
+              style={{
+                width: `${loadedFile || 0}%`,
+              }}
+            ></div>
+            <div
+              className="bg-green-700 h-3 rounded-lg z-10 absolute top-0"
+              style={{
+                width: `${isEmptyProgress ? '0' : currentSong.progress}%`,
+              }}
+            ></div>
+          </div>
         </div>
       </div>
 

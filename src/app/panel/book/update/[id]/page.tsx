@@ -96,7 +96,6 @@ const UpdateBookId = ({params: { id }}: Props) => {
   const updateBookId = async (data: FormData) => {
     try {
       const res = await updateBook(data, id)
-      console.log(res)
       toast.success(`Книга ${res.name} обновлена.`)
       router.refresh()
     } catch (error) {
