@@ -233,8 +233,6 @@ const Player = ({
           ))}
         </div>
       )}
-      <div className="mb-4"></div>
-      {/* Сделать переключение по клику */}
     </div>
   )
 }

@@ -29,3 +29,18 @@ export interface AudioFiles {
   bookId: number
   audioUrl: string
 }
+export interface BookData {
+  id: number
+  name: string
+  slug: string | null
+  description: string
+  imageUrl: string
+  chtecId: number
+  authorID: number
+  seriesId: number | null
+  genreId: number | null
+}
+export interface AudiofilesType {
+  id: number
+  name: string
+}

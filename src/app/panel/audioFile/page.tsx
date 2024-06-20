@@ -1,28 +1,13 @@
 'use client'
+import getAudioForBook from '@/app/books/[slug]/action/get-auido-for-book'
 import Button from '@/app/shared/Button'
+import { AudiofilesType, BookData } from '@/app/shared/_model/interface'
 import { useRouter } from 'next/navigation'
-import { toast } from 'react-toastify'
 import { useEffect, useRef, useState } from 'react'
+import { toast } from 'react-toastify'
 import { getBooks } from '../book/action/get-data'
 import createAudioFiles from './action/create-audio-files'
-import getAudioForBook from '@/app/books/[slug]/action/get-auido-for-book'
 import ListExistsAudio from './components/list-exists-audio'
-
-interface BookData {
-  id: number
-  name: string
-  slug: string | null
-  description: string
-  imageUrl: string
-  chtecId: number
-  authorID: number
-  seriesId: number | null
-  genreId: number | null
-}
-export interface AudiofilesType {
-  id: number;
-  name: string;
-}
 
 const AudioFile = () => {
   const [books, setBooks] = useState<BookData[]>([])
@@ -32,6 +17,7 @@ const AudioFile = () => {
   const [audiofiles, setAudiofiles] = useState<AudiofilesType[]>([])
   const [bookId, setBookId] = useState<number | null>(null)
   const [namesFiles, setNamesFiles] = useState<string[]>([])
+  const [isLoaded, setIsLoaded] = useState<boolean>(false)
 
   const newAudioFile = async (data: FormData) => {
     const audioFile = await createAudioFiles(data)
@@ -41,6 +27,7 @@ const AudioFile = () => {
       if (bookId) {
         currentAddAudio(bookId)
       }
+      setIsLoaded(false)
       router.refresh()
     } else if (audioFile && audioFile.includes('Ошибка')) {
       toast.error(audioFile, { autoClose: 5000 })
@@ -84,13 +71,17 @@ const AudioFile = () => {
       return
     } else {
       setAudiofiles(res)
-    } 
+    }
   }
   useEffect(() => {
     if (bookId) {
       currentAddAudio(bookId)
     }
   }, [bookId])
+
+  const handleAddAudio = () => {
+    setIsLoaded(true)
+  }
 
   return (
     <>
@@ -111,7 +102,7 @@ const AudioFile = () => {
               className="border focus:border-2 border-[#1A202C] outline-none px-2 py-1 rounded-lg"
               onChange={(e) => setBookId(+e.target.value)}
             >
-              <option value=''></option>
+              <option value=""></option>
               {books.map((book: BookData) => (
                 <option key={book.id} value={book.id}>
                   {book.name}
@@ -145,7 +136,13 @@ const AudioFile = () => {
           </div>
 
           <div className="mt-6">
-            <Button type="submit">Создать</Button>
+            <Button
+              type="submit"
+              onClick={handleAddAudio}
+              classProps={`${isLoaded ? 'bg-red-600' : ''}`}
+            >
+              {isLoaded ? 'Загружается...' : 'Добавить'}
+            </Button>
           </div>
         </form>
       </div>
@@ -155,7 +152,7 @@ const AudioFile = () => {
       </div>
 
       {audiofiles && audiofiles.length > 0 && (
-        <ListExistsAudio audiofiles={audiofiles}/>
+        <ListExistsAudio audiofiles={audiofiles} />
       )}
     </>
   )
