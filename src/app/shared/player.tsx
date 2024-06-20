@@ -1,20 +1,14 @@
 'use client'
 import Image from 'next/image'
-import arrowRight from '../../../public/arrow_right.svg'
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
 import arrowLeft from '../../../public/arrow_left.svg'
-import play from '../../../public/play.svg'
-import pause from '../../../public/pause.svg'
-import prew15 from '../../../public/prew15.svg'
+import arrowRight from '../../../public/arrow_right.svg'
 import back15 from '../../../public/back15.svg'
 import list from '../../../public/list.svg'
-import {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from 'react'
-import { Song, CurrentSong, AudioFiles } from '../books/[slug]/page'
+import pause from '../../../public/pause.svg'
+import play from '../../../public/play.svg'
+import prew15 from '../../../public/prew15.svg'
+import { AudioFiles, CurrentSong } from './_model/interface'
 
 type Props = {
   songs: AudioFiles[]
@@ -37,7 +31,7 @@ const Player = ({
   currentSong,
   setCurrentSong,
   bookName,
-  loadedFile
+  loadedFile,
 }: Props) => {
   const clickRef = useRef<HTMLDivElement>()
   const [isEmptyProgress, setIsEmptyProgress] = useState<boolean>(false)
@@ -117,15 +111,18 @@ const Player = ({
   useEffect(() => {
     if (audioElem.current.currentTime === audioElem.current.duration) {
       const index = songs.findIndex((x) => x.name === currentSong.name)
-      if (index === songs.length - 1 && audioElem.current.currentTime === audioElem.current.duration) {
+      if (
+        index === songs.length - 1 &&
+        audioElem.current.currentTime === audioElem.current.duration
+      ) {
         PlayPause(false)
         return
       }
       skipToNext()
       PlayPause(true)
-      localStorage.setItem('audioName', songs[index + 1].name);
+      localStorage.setItem('audioName', songs[index + 1].name)
     }
-  }, [audioElem, skipToNext]) 
+  }, [audioElem, skipToNext])
 
   const handleEnterByName = (song: AudioFiles) => {
     setCurrentSong(song)
@@ -150,7 +147,9 @@ const Player = ({
         ) : (
           <p>00:00</p>
         )}
-        {audioElem.current.currentTime && <p>{normalTime(Math.round(audioElem.current.duration))}</p> }
+        {audioElem.current.currentTime && (
+          <p>{normalTime(Math.round(audioElem.current.duration))}</p>
+        )}
       </div>
       <div className="px-4 mb-2">
         <div
@@ -158,7 +157,7 @@ const Player = ({
           onClick={checkWidth}
           ref={clickRef as React.RefObject<HTMLDivElement>}
         >
-          <div className='relative'>
+          <div className="relative">
             <div
               className="bg-yellow-500 h-3 rounded-lg"
               style={{
@@ -227,7 +226,9 @@ const Player = ({
               onClick={() => handleEnterByName(song)}
             >
               <p>{song.name}</p>
-              {currentSong.name === song.name &&  <div className='w-4 h-4 rounded-full bg-orange-600 mr-4'></div>}
+              {currentSong.name === song.name && (
+                <div className="w-4 h-4 rounded-full bg-orange-600 mr-4"></div>
+              )}
             </div>
           ))}
         </div>

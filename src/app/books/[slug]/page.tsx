@@ -1,4 +1,5 @@
 'use client'
+import { AudioFiles, Book, CurrentSong } from '@/app/shared/_model/interface'
 import Player from '@/app/shared/player'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
@@ -11,38 +12,6 @@ type Props = {
   params: {
     slug: string
   }
-}
-
-export interface Song {
-  title: string
-  url: string
-  time: string
-}
-export interface CurrentSong {
-  id: number
-  name: string
-  bookId: number
-  audioUrl: string
-  progress?: number
-  length?: number
-}
-
-interface Book {
-  id: number
-  name: string
-  slug: string
-  description: string
-  imageUrl: string
-  chtecId: number
-  authorID: number
-  seriesId: number | null
-  genreId: number | null
-}
-export interface AudioFiles {
-  id: number
-  name: string
-  bookId: number
-  audioUrl: string
 }
 
 const BookPage = ({ params: { slug } }: Props) => {
