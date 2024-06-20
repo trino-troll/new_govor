@@ -1,18 +1,11 @@
 'use client'
 import Player from '@/app/shared/player'
-import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
-import { getOneBook, getSeriesBooks } from './action/get-one-book'
-import getAudioForBook from './action/get-auido-for-book'
+import { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel"
-import Link from 'next/link'
+import getAudioForBook from './action/get-auido-for-book'
+import { getOneBook, getSeriesBooks } from './action/get-one-book'
+import AllSiries from './components/all-siries'
 
 type Props = {
   params: {
@@ -178,19 +171,19 @@ const BookPage = ({ params: { slug } }: Props) => {
   }, [songs, book])
 
   useEffect(() => {
-
-      if (currentSong && audioElem.current) {
-        if (audioElem.current.buffered.length > 0) {
-          const bufferedEnd = audioElem.current.buffered.end(audioElem.current.buffered.length - 1);
-          const duration = audioElem.current.duration;
-          const loadTime = Math.round((bufferedEnd / duration) * 100)
-          if (loadTime !== loadedFile) {
-            setLoadedFile(loadTime)
-          }
+    if (currentSong && audioElem.current) {
+      if (audioElem.current.buffered.length > 0) {
+        const bufferedEnd = audioElem.current.buffered.end(
+          audioElem.current.buffered.length - 1,
+        )
+        const duration = audioElem.current.duration
+        const loadTime = Math.round((bufferedEnd / duration) * 100)
+        if (loadTime !== loadedFile) {
+          setLoadedFile(loadTime)
         }
-    };
-
-  }, [currentSong, loadedFile]);
+      }
+    }
+  }, [currentSong, loadedFile])
 
   if (!book)
     return (
@@ -204,12 +197,7 @@ const BookPage = ({ params: { slug } }: Props) => {
       <h2 className="text-center text-[24px] font-semibold">{book.name}</h2>
       <div>
         <div className=" w-1/2 p-4 float-left">
-          <Image
-            src={book.imageUrl}
-            width={210}
-            height={210}
-            alt={book.name}
-          />
+          <Image src={book.imageUrl} width={210} height={210} alt={book.name} />
         </div>
         <p className="px-4">{book.description}</p>
       </div>
@@ -233,32 +221,7 @@ const BookPage = ({ params: { slug } }: Props) => {
         />
       )}
 
-      {allSiries.length > 1 && (
-        <div>
-          <h2 className='font-semibold text-2xl ml-4'>Книги из серии</h2>
-          <div className='m-auto w-2/3'>
-            <Carousel className='relative'>
-              <CarouselContent >
-                {allSiries.map((item, i: number) => (
-                  <CarouselItem key={i} className="basis-1/2">
-                    <Link href={`/books/${item.slug}`}>
-                      <Image
-                        src={item.imageUrl}
-                        width={140}
-                        height={140}
-                        alt={item.name}
-                      />
-                    </Link>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious className='absolute -left-12 bg-[#1A202C] text-white'/>
-              <CarouselNext className='absolute -right-12 bg-[#1A202C] text-white'/>
-            </Carousel>
-          </div>
-        </div>
-      )}
-      
+      {allSiries.length > 1 && <AllSiries allSiries={allSiries} />}
     </>
   )
 }
