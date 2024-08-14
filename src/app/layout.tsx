@@ -7,6 +7,7 @@ import Footer from './footer/page'
 import './globals.css'
 import Header from './header/page'
 import MainBanner from './shared/banner/main-banner'
+import ChatWithNeiro from './shared/chatWithNeiro'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -62,6 +63,7 @@ export default function RootLayout({
           <MainBanner />
           <Footer />
         </div>
+        <ChatWithNeiro />
       </body>
     </html>
   )
