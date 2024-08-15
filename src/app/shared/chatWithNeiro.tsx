@@ -9,8 +9,8 @@ const ChatForSite = () => (
         __html: `
           (function (m, e, t, r, i, k, a) {
             if (e.getElementById('chat-widget')) return;
-            m[i] = m[i]  function () {
-              (m[i].a = m[i].a  []).push(arguments)
+            m[i] = m[i] || function () {
+              (m[i].a = m[i].a || []).push(arguments)
             };
             m[i].l = 1 * new Date();
             k = e.createElement(t);
