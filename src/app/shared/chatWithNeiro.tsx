@@ -21,7 +21,7 @@ const ChatForSite = () => (
               window.chatInit && window.chatInit('clztjayuu0001bdfo0jnd4qs1');
             };
             a.parentNode.insertBefore(k, a);
-          })(window, document, 'script', 'https://llcibs.ru/chat-widget.js', 'chatInit');
+          })(window, document, 'script', 'https://dev.llcibs.ru/chat-widget.js', 'chatInit');
         `,
       }}
     />
