@@ -7,7 +7,7 @@ import Footer from './footer/page'
 import './globals.css'
 import Header from './header/page'
 import MainBanner from './shared/banner/main-banner'
-import ChatWithNeiro from './shared/chatWithNeiro'
+import ChatForSite from './shared/chatWithNeiro'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -26,23 +26,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        <script
-          async
-          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GOOGLE_ANALITICS}`}
-        ></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-
-              gtag('config', ${process.env.GOOGLE_ANALITICS});
-            `,
-          }}
-        />
-      </head>
+      <head></head>
       <body className={`${inter.className} bg-black`}>
         <div className="relative min-h-screen max-w-[450px] bg-[#FAFAFA] mx-auto">
           <Header />
@@ -63,7 +47,7 @@ export default function RootLayout({
           <MainBanner />
           <Footer />
         </div>
-        <ChatWithNeiro />
+        <ChatForSite />
       </body>
     </html>
   )
