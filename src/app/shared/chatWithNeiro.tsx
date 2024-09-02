@@ -18,10 +18,10 @@ const ChatForSite = () => (
             k.async = 1;
             k.src = r;
             k.onload = function() {
-              window.chatInit && window.chatInit('clztjayuu0001bdfo0jnd4qs1');
+              window.chatInit && window.chatInit('cm0kx1z350001rgmz8j78c6kk');
             };
             a.parentNode.insertBefore(k, a);
-          })(window, document, 'script', 'https://dev.llcibs.ru/chat-widget.js', 'chatInit');
+          })(window, document, 'script', 'https://lemur-moving-perch.ngrok-free.app/chat-widget.js', 'chatInit');
         `,
       }}
     />
