@@ -8,8 +8,10 @@ import './globals.css'
 import Header from './header/page'
 import MainBanner from './shared/banner/main-banner'
 import ChatForSite from './shared/chatWithNeiro'
+import YandexMetrika from './shared/yandex-metrika'
 
 const inter = Inter({ subsets: ['latin'] })
+const metrikaId = '98712510'
 
 export const metadata: Metadata = {
   title: {
@@ -48,6 +50,7 @@ export default function RootLayout({
           <Footer />
         </div>
         <ChatForSite />
+        <YandexMetrika metrikaId={metrikaId} />
       </body>
     </html>
   )

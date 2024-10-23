@@ -18,7 +18,7 @@ const ChatForSite = () => (
             k.async = 1;
             k.src = r;
             k.onload = function() {
-              window.chatInit && window.chatInit('cm0lg5q9e0001e0og9p2yc4pa');
+              window.chatInit && window.chatInit('cm0nlf6xr0001p34yh5zdvf42');
             };
             a.parentNode.insertBefore(k, a);
           })(window, document, 'script', 'https://dev.llcibs.ru/chat-widget.js', 'chatInit');
